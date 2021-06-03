@@ -14,9 +14,4 @@ public class BuyAndSell {
         }
         return maxProfit;
     }
-
-    public static void main(String[] args) {
-        int[] arrays = {7,1,5,3,6,4};
-        System.out.println(solution(arrays));
-    }
 }
