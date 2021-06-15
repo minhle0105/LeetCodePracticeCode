@@ -2,8 +2,6 @@ package com.minhle.practiceleetcode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import static java.lang.Math.*;
-
 public class MaximumSubarray {
     public int maxSubArray(int[] nums) {
         int result = nums[0];
