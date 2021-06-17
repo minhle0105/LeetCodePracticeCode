@@ -1,5 +1,6 @@
 package com.minhle.practiceleetcode;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -34,8 +35,12 @@ public class SingleNumberIII {
         return results;
     }
 
-    public static void main(String[] args) {
+    @Test
+    void firstTest() {
+        int[] expectedArray = {0,-2147483648};
+        String expected = Arrays.toString(expectedArray);
         int[] nums = {1,1,0,-2147483648};
-        System.out.println(Arrays.toString(singleNumber(nums)));
+        String actual = Arrays.toString(singleNumber(nums));
+        Assertions.assertEquals(expected, actual);
     }
 }
