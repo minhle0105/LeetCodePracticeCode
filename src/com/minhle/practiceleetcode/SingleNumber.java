@@ -8,20 +8,19 @@ public class SingleNumber {
                   return 0;
             }
             HashMap<Integer, Integer> hashmap = new HashMap<>();
-            for (int i = 0; i < nums.length; i++) {
-                  if (nums[i] < -3 * Math.pow(10,4) || nums[i] > 3 * Math.pow(10,4)) {
+            for (int j : nums) {
+                  if (j < -3 * Math.pow(10, 4) || j > 3 * Math.pow(10, 4)) {
                         return 0;
                   }
-                  if (!hashmap.containsKey(nums[i])) {
-                        hashmap.put(nums[i], 1);
-                  }
-                  else {
-                        hashmap.put(nums[i], hashmap.get(nums[i]) + 1);
+                  if (!hashmap.containsKey(j)) {
+                        hashmap.put(j, 1);
+                  } else {
+                        hashmap.put(j, hashmap.get(j) + 1);
                   }
             }
-            for (int i = 0; i < nums.length; i++) {
-                  if (hashmap.get(nums[i]) == 1) {
-                        return nums[i];
+            for (int num : nums) {
+                  if (hashmap.get(num) == 1) {
+                        return num;
                   }
             }
             return 0;
