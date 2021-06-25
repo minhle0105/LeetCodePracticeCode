@@ -4,12 +4,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HappyNumber {
     public boolean isHappy(int n) {
         String xString = Integer.toString(n);
         int result = 0;
-        ArrayList<Integer> existedSum = new ArrayList<>();
+        HashMap<Integer, Integer> existedSum = new HashMap<>();
         boolean isAHappyNumber = false;
 
         while (true) {
@@ -17,14 +18,14 @@ public class HappyNumber {
             for (int i = 0; i < xString.length(); i++) {
                 result += Math.pow(Integer.parseInt(String.valueOf(xString.charAt(i))), 2);
             }
-            if (existedSum.contains(result)) {
+            if (existedSum.containsKey(result)) {
                 break;
             }
             if (result == 1) {
                 isAHappyNumber = true;
                 break;
             }
-            existedSum.add(result);
+            existedSum.put(result, 1);
             xString = Integer.toString(result);
         }
         return isAHappyNumber;
