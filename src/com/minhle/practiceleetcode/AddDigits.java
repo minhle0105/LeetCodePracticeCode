@@ -6,15 +6,14 @@ import org.junit.jupiter.api.Test;
 public class AddDigits {
     public int addDigits(int num) {
         int result;
-        while (true) {
+        do {
             result = 0;
             result += num % 10;
             result += num / 10;
-            if (result / 10 == 0) {
-                break;
-            }
             num = result;
         }
+        while (result / 10 != 0);
+
         return result;
     }
 
