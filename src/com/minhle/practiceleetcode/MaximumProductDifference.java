@@ -4,18 +4,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class MaximumProductDifference {
-
     public int maxProductDifference(int[] nums) {
         int[] maxProduct = new int[2];
         maxProduct[0] = nums[0];
         maxProduct[1] = nums[1];
+        int currentMaxProduct = maxProduct[0] * maxProduct[1];
+        int greaterNumInMax = Math.max(maxProduct[0], maxProduct[1]);
+
         int[] minProduct = new int[2];
         minProduct[0] = nums[0];
         minProduct[1] = nums[1];
-
-        int currentMaxProduct = maxProduct[0] * maxProduct[1];
         int currentMinProduct = minProduct[0] * minProduct[1];
-        int greaterNumInMax = Math.max(maxProduct[0], maxProduct[1]);
         int smallerNumInMin = Math.min(minProduct[0], minProduct[1]);
 
         for (int i = 2; i < nums.length; i++) {
