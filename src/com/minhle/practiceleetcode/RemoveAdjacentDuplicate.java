@@ -3,6 +3,8 @@ package com.minhle.practiceleetcode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
+
 
 public class RemoveAdjacentDuplicate {
     public String removeDuplicates(String s) {
@@ -11,7 +13,7 @@ public class RemoveAdjacentDuplicate {
                 String duplicateCharacters = String.valueOf(s.charAt(i));
                 duplicateCharacters += String.valueOf(s.charAt(i+1));
                 s = s.replaceFirst(duplicateCharacters, "");
-                return removeDuplicates(s);
+                i = -1;
             }
         }
         return s;
