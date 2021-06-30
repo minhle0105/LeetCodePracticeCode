@@ -1,5 +1,6 @@
 package com.minhle.practiceleetcode;
 
+
 public class BuyAndSell {
     public static int solution(int[] prices) {
         int minPrice = prices[0];
