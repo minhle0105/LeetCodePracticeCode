@@ -3,9 +3,6 @@ package com.minhle.practiceleetcode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedList;
-
-
 public class RemoveAdjacentDuplicate {
     public String removeDuplicates(String s) {
         for (int i = 0; i < s.length() - 1; i++) {
