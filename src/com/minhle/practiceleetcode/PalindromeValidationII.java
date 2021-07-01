@@ -81,9 +81,15 @@ public class PalindromeValidationII {
     }
 
     @Test
-    void lastTest() {
+    void thirdTest() {
         String s = "abc";
         Assertions.assertFalse(validPalindrome(s));
+    }
+
+    @Test
+    void firstFailedTest() {
+        String s = "cbbcc";
+        Assertions.assertTrue(validPalindrome(s));
     }
 
     @Test
