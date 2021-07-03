@@ -10,7 +10,8 @@ public class RemoveAdjacentDuplicate {
                 String duplicateCharacters = String.valueOf(s.charAt(i));
                 duplicateCharacters += String.valueOf(s.charAt(i+1));
                 s = s.replaceFirst(duplicateCharacters, "");
-                i = -1;
+                i = -1; // option 1 -> restart the loop
+                // return removeDuplicates(s); // option 2 -> recursively call the function
             }
         }
         return s;
