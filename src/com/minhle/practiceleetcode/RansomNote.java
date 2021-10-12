@@ -25,15 +25,18 @@ public class RansomNote {
         if (ransomNote.length() > magazine.length()) {
             return false;
         }
-        HashMap<Character, Integer> ransomNoteCount = getCharFrequency(ransomNote);
         HashMap<Character, Integer> magazineCount = getCharFrequency(magazine);
+
         for (int i = 0; i < ransomNote.length(); i++) {
             if (!(magazineCount.containsKey(ransomNote.charAt(i)))) {
                 return false;
             }
             else {
-                if (!(ransomNoteCount.get(ransomNote.charAt(i)) <= magazineCount.get(ransomNote.charAt(i)))) {
-                    return false;
+                if (magazineCount.get(ransomNote.charAt(i)) == 1) {
+                    magazineCount.remove(ransomNote.charAt(i));
+                }
+                else {
+                    magazineCount.put(ransomNote.charAt(i), magazineCount.get(ransomNote.charAt(i)) - 1);
                 }
             }
         }
