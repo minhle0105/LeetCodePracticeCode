@@ -43,32 +43,42 @@ public class RansomNote {
         return true;
 
     }
+    public boolean canConstruct(String ransomNote, String magazine, int a) {
+        for (char c : ransomNote.toCharArray()) {
+            int index = magazine.indexOf(c);
+            if (index == -1) {
+                return false;
+            }
+            magazine = magazine.substring(0, index) + magazine.substring(index+1);
+        }
+        return true;
+    }
 
     @Test
     void firstTest() {
         String ransomNote = "a";
         String magazine = "b";
-        Assertions.assertFalse(canConstruct(ransomNote, magazine));
+        Assertions.assertFalse(canConstruct(ransomNote, magazine, 1));
     }
 
     @Test
     void secondTest() {
         String ransomNote = "aa";
         String magazine = "ab";
-        Assertions.assertFalse(canConstruct(ransomNote, magazine));
+        Assertions.assertFalse(canConstruct(ransomNote, magazine, 1));
     }
 
     @Test
     void thirdTest() {
         String ransomNote = "aa";
         String magazine = "aba";
-        Assertions.assertTrue(canConstruct(ransomNote, magazine));
+        Assertions.assertTrue(canConstruct(ransomNote, magazine, 1));
     }
 
     @Test
     void failTest() {
         String ransomNote = "az";
         String magazine = "ab";
-        Assertions.assertFalse(canConstruct(ransomNote, magazine));
+        Assertions.assertFalse(canConstruct(ransomNote, magazine, 1));
     }
 }
