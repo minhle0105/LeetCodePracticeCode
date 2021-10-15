@@ -4,33 +4,47 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class DecimalToHexa {
-    String converter(int x) {
+    static void converter(int x) {
         int remainder = x % 16;
-        StringBuilder hexa = new StringBuilder();
+        int xCopy = x;
+        int remainderCopy = xCopy % 16;
+        int r = remainderCopy;
         int ascii = 0;
+        int iterationCount = 0;
         while (remainder != 0) {
             x /= 16;
             if (remainder < 10) {
                 ascii = 48 + remainder;
-            }
-            else {
+            } else {
                 ascii = 55 + remainder;
             }
-            hexa.append((char) ascii);
             remainder = x % 16;
+            iterationCount ++;
         }
-        StringBuilder result = new StringBuilder();
-        for (int i = hexa.toString().length() - 1; i >= 0; i--) {
-            result.append(hexa.toString().charAt(i));
+        int printCount = 0;
+        while (printCount <= iterationCount) {
+            while (remainderCopy != 0) {
+                xCopy /= 16;
+                if (remainderCopy < 10) {
+                    ascii = 48 + remainderCopy;
+                } else {
+                    ascii = 55 + remainderCopy;
+                }
+                remainderCopy = xCopy % 16;
+                for (int count = iterationCount; count >= 0; count-- ) {
+                    if (count - printCount >= 0) {
+                        System.out.print((char) ascii);
+                        printCount++;
+                    }
+                }
+
+            }
         }
-        return result.toString();
+
+
     }
 
-    @Test
-    void firstTest() {
-        int x = 2545;
-        String expected = "9F1";
-        String actual = converter(x);
-        Assertions.assertEquals(expected, actual);
+    public static void main(String[] args) {
+        converter(2545);
     }
 }
