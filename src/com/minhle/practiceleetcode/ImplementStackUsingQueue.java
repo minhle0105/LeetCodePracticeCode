@@ -49,13 +49,4 @@ public class ImplementStackUsingQueue {
     public boolean empty() {
         return this.queue1.isEmpty() && this.queue2.isEmpty();
     }
-
-    public static void main(String[] args) {
-        ImplementStackUsingQueue obj = new ImplementStackUsingQueue();
-        obj.push(1);
-        obj.push(2);
-        int param_2 = obj.top();
-        int param_3 = obj.pop();
-        boolean param_4 = obj.empty();
-    }
 }
