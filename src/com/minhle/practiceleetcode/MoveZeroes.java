@@ -1,9 +1,7 @@
 package com.minhle.practiceleetcode;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 public class MoveZeroes {
     public static void move(int[] nums) {
