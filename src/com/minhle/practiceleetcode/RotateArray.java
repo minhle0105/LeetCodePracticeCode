@@ -15,7 +15,14 @@ public class RotateArray {
         for (Integer key : hashMap.keySet()) {
             nums[key] = hashMap.get(key);
         }
+    }
 
+    public void rotateUsingExtraArray(int[] nums, int k) {
+        int[] extra = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            extra[(i+k)%nums.length] = nums[i];
+        }
+        System.arraycopy(extra, 0, nums, 0, nums.length);
     }
 
     @Test
