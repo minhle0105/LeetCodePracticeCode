@@ -1,5 +1,8 @@
 package com.minhle.practiceleetcode;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.util.HashMap;
 
 public class MajorityElement {
@@ -20,5 +23,13 @@ public class MajorityElement {
             }
         }
         return -1;
+    }
+
+    @Test
+    void firstTest() {
+        int[] nums = {2,2,1,1,1,2,2};
+        int expected = 2;
+        int actual = majorityElement(nums);
+        Assertions.assertEquals(expected, actual);
     }
 }
