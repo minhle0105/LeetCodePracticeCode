@@ -3,7 +3,6 @@ package com.minhle.practiceleetcode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LongestSubstringWithoutRepeatingCharacters {
