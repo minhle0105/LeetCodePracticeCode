@@ -9,6 +9,33 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CitadelInterview {
+
+    // 2 methods for question 1
+    public int threeSumSmaller(int[] nums, int target) {
+        Arrays.sort(nums);
+        int sum = 0;
+        for (int i = 0; i < nums.length - 2; i++) {
+            sum += twoSumSmaller(nums, i + 1, target - nums[i]);
+        }
+        return sum;
+    }
+
+    private int twoSumSmaller(int[] nums, int startIndex, int target) {
+        int sum = 0;
+        int left = startIndex;
+        int right = nums.length - 1;
+        while (left < right) {
+            if (nums[left] + nums[right] < target) {
+                sum += right - left;
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return sum;
+    }
+
+    // Question 2
     private int getMostVisited(int n, List<Integer> sprints) {
         List<Integer> phases = new ArrayList<>();
         for (int i = 0; i < sprints.size() - 1; i++) {
@@ -75,6 +102,24 @@ public class CitadelInterview {
         List<Integer> sprints = new ArrayList<>(Arrays.asList(4,1,5,10,3));
         int expected = 3;
         int actual = getMostVisited(n, sprints);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void lastTest() {
+        int n = 10;
+        List<Integer> sprints = new ArrayList<>(Arrays.asList(1,5,10,3));
+        int expected = 5;
+        int actual = getMostVisited(n, sprints);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void testQ1() {
+        int[] nums = {1,2,3,4,5};
+        int target = 8;
+        int expected = 3;
+        int actual = threeSumSmaller(nums, target);
         Assertions.assertEquals(expected, actual);
     }
 }
