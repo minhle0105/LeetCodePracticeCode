@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Tree {
-    public TreeNode root;
+    public TreeNode_Codecademy root;
 
-    public Tree(TreeNode root) {
+    public Tree(TreeNode_Codecademy root) {
         this.root = root;
     }
 
@@ -14,27 +14,27 @@ public class Tree {
         print(this.root, 0);
     }
 
-    public void print(TreeNode current, int level) {
+    public void print(TreeNode_Codecademy current, int level) {
         String levelMarks = "";
         for (int i = 0; i < level; i++) {
             levelMarks += "-- ";
         }
         System.out.println(levelMarks + current.data);
-        for (TreeNode child : current.children) {
+        for (TreeNode_Codecademy child : current.children) {
             print(child, level + 1);
         }
     }
 
-    public void depthFirstTraversal(TreeNode current) {
+    public void depthFirstTraversal(TreeNode_Codecademy current) {
         System.out.print(current.data + " ");
-        for (TreeNode child : current.children) {
+        for (TreeNode_Codecademy child : current.children) {
             depthFirstTraversal(child);
         }
     }
 
     public void breadthFirstTraversal() {
-        TreeNode current = this.root;
-        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode_Codecademy current = this.root;
+        Queue<TreeNode_Codecademy> queue = new LinkedList<>();
         queue.add(current);
         while (!queue.isEmpty()) {
             current = queue.poll();
@@ -44,10 +44,10 @@ public class Tree {
     }
 
     public static void main(String[] args) {
-        TreeNode shirts = new TreeNode("Shirts");
-        TreeNode blue = new TreeNode("Blue");
-        TreeNode yellow = new TreeNode("Yellow");
-        TreeNode red = new TreeNode("Red");
+        TreeNode_Codecademy shirts = new TreeNode_Codecademy("Shirts");
+        TreeNode_Codecademy blue = new TreeNode_Codecademy("Blue");
+        TreeNode_Codecademy yellow = new TreeNode_Codecademy("Yellow");
+        TreeNode_Codecademy red = new TreeNode_Codecademy("Red");
         shirts.addChild(blue);
         shirts.addChild(yellow);
         shirts.addChild(red);
