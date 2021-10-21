@@ -118,7 +118,7 @@ public class CitadelInterview {
     void testQ1() {
         int[] nums = {1,2,3,4,5};
         int target = 8;
-        int expected = 3;
+        int expected = 2;
         int actual = threeSumSmaller(nums, target);
         Assertions.assertEquals(expected, actual);
     }
