@@ -5,42 +5,20 @@ import org.junit.jupiter.api.Test;
 
 public class SameTree {
     public boolean isSameTree(TreeNode p, TreeNode q) {
-        try {
-            if (p.val != q.val) {
-                return false;
-            }
-        }
-        catch (NullPointerException e) {
-            if (p == null & q != null) {
-                return false;
-            }
-            if (p != null & q == null) {
-                return false;
-            }
-            if (p == null & q == null) {
-                return true;
-            }
+        if (p == null & q == null) {
+            return true;
         }
 
-        TreeNode leftSub1 = p.left;
-        TreeNode leftSub2 = q.left;
-        TreeNode rightSub1 = p.right;
-        TreeNode rightSub2 = q.right;
-
-        boolean firstFalseCondition = (leftSub1 == null & leftSub2 != null);
-        boolean secondFalseCondition = (leftSub1 != null & leftSub2 == null);
-        boolean thirdFalseCondition = (rightSub1 == null & rightSub2 != null);
-        boolean forthFalseCondition = (rightSub1 != null & rightSub1 == null);
-        if (firstFalseCondition | secondFalseCondition | thirdFalseCondition | forthFalseCondition) {
+        if (p == null | q == null) {
             return false;
         }
-        else {
-            leftSub1 = p.left;
-            leftSub2 = q.left;
-            rightSub1 = p.right;
-            rightSub2 = q.right;
-            return isSameTree(leftSub1, leftSub2) & isSameTree(rightSub1, rightSub2);
+
+
+        if (p.val != q.val) {
+            return false;
         }
+
+        return isSameTree(p.left, q.left) & isSameTree(p.right, q.right);
 
     }
 
