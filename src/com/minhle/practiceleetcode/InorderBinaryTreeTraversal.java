@@ -16,7 +16,6 @@ public class InorderBinaryTreeTraversal {
             list = traverse(root.left, list);
             list.add(root.val);
             list = traverse(root.right, list);
-            return list;
         }
         return list;
     }
