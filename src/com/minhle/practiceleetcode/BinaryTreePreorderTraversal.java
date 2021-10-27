@@ -49,4 +49,16 @@ public class BinaryTreePreorderTraversal {
         }
         return results;
     }
+
+    public List<Integer> preorderTraversalRecursive(TreeNode root) {
+        return traverse(root, new ArrayList<>());
+    }
+    private List<Integer> traverse(TreeNode root, List<Integer> list) {
+        if (root != null) {
+            list.add(root.val);
+            list = traverse(root.left, list);
+            list = traverse(root.right, list);
+        }
+        return list;
+    }
 }
