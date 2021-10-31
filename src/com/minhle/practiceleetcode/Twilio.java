@@ -1,9 +1,56 @@
 package com.minhle.practiceleetcode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Twilio {
+
+    // Question 1
+    public static List<List<String>> validateImageSize(List<List<String>> imageUrls, String maxSize) {
+        // Write your code here
+        if (maxSize.equals("none")) {
+            maxSize = "10MB";
+        }
+        List<List<String>> result = new ArrayList<>();
+        for (List<String> imageUrl : imageUrls) {
+            String urlOfEach = imageUrl.get(0);
+            List<String> urlToAdd = new ArrayList<>();
+            urlToAdd.add(urlOfEach);
+            result.add(urlToAdd);
+        }
+        String dataUnit = String.valueOf(maxSize.charAt(maxSize.length() - 2));
+
+        for (List<String> imageUrl : imageUrls) {
+            boolean lessThanMaxSize = true;
+            String size = imageUrl.get(1);
+            double parsedMaxSize = Integer.parseInt(maxSize.substring(0, maxSize.length() - 2));
+            if (dataUnit.equals("M")) {
+                double imageSize = (double) Long.parseLong(size) / 1000000;
+                if(imageSize > parsedMaxSize) {
+                    lessThanMaxSize = false;
+                }
+            }
+            else if (dataUnit.equals("K")) {
+                double imageSize = (double) Long.parseLong(size) / 1000;
+                if(imageSize > parsedMaxSize) {
+                    lessThanMaxSize = false;
+                }
+            }
+            else {
+                double imageSize = (double) Long.parseLong(size) / 1000000000;
+                if(imageSize > parsedMaxSize) {
+                    lessThanMaxSize = false;
+                }
+            }
+            String toAdd = lessThanMaxSize ? "TRUE" : "FALSE";
+            result.get(imageUrls.indexOf(imageUrl)).add(toAdd);
+        }
+
+        return result;
+    }
+
+    // Question 2 - Helper Method 1
     private static boolean isE164(String address) {
 
         if (address.charAt(0) == '+') {
@@ -26,25 +73,30 @@ public class Twilio {
         return true;
     }
 
-    /*
-     * Complete the 'validatePhoneNumberFormat' function below.
-     *
-     * The function is expected to return a STRING.
-     * The function accepts STRING address as parameter.
-     */
+    private static boolean checkWechat(String address) {
+        String[] alphabets = "0123456789abcdefghijklmnopqrstuvwxyz-_@.".split("");
+        List<String> list = new ArrayList<>();
+        Collections.addAll(list, alphabets);
+        for (char c : address.toCharArray()) {
+            if (!list.contains(String.valueOf(c))) {
+                return false;
+            }
+        }
+        return true;
 
+    }
+
+    // Question 2 -
     public static String validatePhoneNumberFormat(String address) {
         // Write your code here
         String result = "";
-        String[] channels = {"whatsapp", "wechat", "messenger", "sms"};
-        if (address.indexOf(":") < 0) {
+        if (!address.contains(":")) {
             if (isE164(address)) {
                 result = "SMS";
             }
             else {
                 result = "INVALID_ADDRESS";
             }
-            return result;
         }
         else {
             if (address.indexOf(" ") > 0) {
@@ -59,16 +111,29 @@ public class Twilio {
             if (address.substring(0, indexOfColon).equals("whatsapp") || address.substring(0, indexOfColon).equals("messenger")) {
                 if (isE164(address.substring(indexOfColon + 1))) {
                     result = address.substring(0, indexOfColon).toUpperCase();
-                    return result;
+                }
+                else {
+                    result = "INVALID_ADDRESS";
+                }
+            }
+            else {
+                if (!address.substring(0, indexOfColon).equals("wechat")) {
+                    result = "INVALID_ADDRESS";
+                }
+                else {
+                    if (checkWechat(address.substring(indexOfColon+1))) {
+                        result = "WECHAT";
+                    }
+                    else {
+                        result = "INVALID_ADDRESS";
+                    }
                 }
             }
         }
         return result;
-
     }
 
-
     public static void main(String[] args) {
-        validatePhoneNumberFormat("whatsapp:this_is_not_an_E164_number");
+        System.out.println(validatePhoneNumberFormat("whatsapp:this_is_not_an_E164_number"));
     }
 }
