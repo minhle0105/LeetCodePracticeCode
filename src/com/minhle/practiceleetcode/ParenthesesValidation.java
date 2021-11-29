@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class ParenthesesValidation {
       public boolean isValid(String s) {
-            Stack<Character> parentheses = new Stack<Character>();
+            Stack<Character> parentheses = new Stack<>();
 
             for (int i = 0; i < s.length(); i++) {
                   if (s.charAt(i) == '(' || s.charAt(i) == '{' || s.charAt(i) == '[') {
