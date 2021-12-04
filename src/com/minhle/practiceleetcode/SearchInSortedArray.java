@@ -6,16 +6,39 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 public class SearchInSortedArray {
-    public int search(int[] nums, int target) {
+
+    private int getBreakIndex(int[] nums) {
         int breakIndex = -1;
 
-        for (int i = 0; i < nums.length - 1; i++) {
-            if (nums[i] > nums[i+1]) {
-                breakIndex = i+1;
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (mid == nums.length - 1) {
                 break;
             }
+            if (nums[mid] > nums[mid+1]) {
+                breakIndex = mid + 1;
+                break;
+            }
+            else {
+                if (nums[mid] < nums[left]) {
+                    right = mid - 1;
+                }
+                else {
+                    left = mid + 1;
+                }
+            }
         }
+        return breakIndex;
+    }
 
+    public int search(int[] nums, int target) {
+        // first, the array might be rotated so we find the index at which the array was rotated
+        int breakIndex = getBreakIndex(nums);
+
+        // if breakIndex != -1, then the array was rotated, we perform binary search with left and right part
         if (breakIndex != -1) {
             int isInLeftHalf = isInArr(Arrays.copyOfRange(nums, 0, breakIndex), target);
             if (isInLeftHalf != -1) {
@@ -28,6 +51,7 @@ public class SearchInSortedArray {
             return -1;
         }
 
+        // else, the array is already sorted, we perform an original binary search with the whole array
         else {
             return isInArr(nums, target);
         }
@@ -75,10 +99,19 @@ public class SearchInSortedArray {
     }
 
     @Test
-    void lastTest() {
-        int[] nums = {1, 3};
+    void sortedArrayTest() {
+        int[] nums = {0,1,2,3,4,5};
         int target = 3;
-        int expected = 1;
+        int expected = 3;
+        int actual = search(nums, target);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void lastTest() {
+        int[] nums = {5,1,3};
+        int target = 5;
+        int expected = 0;
         int actual = search(nums, target);
         Assertions.assertEquals(expected, actual);
     }
