@@ -8,16 +8,14 @@ import java.util.HashSet;
 public class IntersectionOfTwoLinkedLists {
 
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if (headA == headB) {
-            return headA;
-        }
+
         HashSet<ListNode> hashSet = new HashSet<>();
-        ListNode curr = headB;
+        ListNode curr = headA;
         while (curr != null) {
             hashSet.add(curr);
             curr = curr.next;
         }
-        curr = headA;
+        curr = headB;
         while (curr != null) {
             if (hashSet.contains(curr)) {
                 return curr;
