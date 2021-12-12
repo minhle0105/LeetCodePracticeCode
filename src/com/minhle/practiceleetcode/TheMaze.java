@@ -1,10 +1,13 @@
 package com.minhle.practiceleetcode;
 
-import java.util.Scanner;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.util.Stack;
 
 public class TheMaze {
 
+    static final int[][] maze = {{0,0,1,0,0},{0,0,0,0,0},{0,0,0,1,0},{1,1,0,1,1},{0,0,0,0,0}};
     static final int[] dR = {-1, 1, 0, 0};
     static final int[] dC = {0, 0, -1, 1};
 
@@ -33,7 +36,7 @@ public class TheMaze {
                 int nextX = thisX;
                 int nextY = thisY;
                 boolean inBound = 0 <= nextX && nextX < row && 0 <= nextY && nextY < column;
-                if (!inBound) {
+                if (!inBound && visited[nextX][nextY] == 1) {
                     continue;
                 }
                 while (0 <= nextX + dR[i] && nextX + dR[i] < row && 0 <= nextY + dC[i] && nextY + dC[i] < column && maze[nextX + dR[i]][nextY + dC[i]] == 0) {
@@ -51,22 +54,24 @@ public class TheMaze {
         return false;
     }
 
-    public static void main(String[] args) {
-        int[][] maze = {{0,0,1,0,0},{0,0,0,0,0},{0,0,0,1,0},{1,1,0,1,1},{0,0,0,0,0}};
+    @Test
+    void test1() {
         int[] start = {0,4};
         int[] dest = {4,4};
+        Assertions.assertTrue(hasPath(maze, start, dest));
+    }
 
-        int[][] maze2 = {{0,0,1,0,0},{0,0,0,0,0},{0,0,0,1,0},{1,1,0,1,1},{0,0,0,0,0}};
-        int[] start2 = {0,4};
-        int[] dest2 = {3,2};
+    @Test
+    void test2() {
+        int[] start = {0,4};
+        int[] dest = {3,2};
+        Assertions.assertFalse(hasPath(maze, start, dest));
+    }
 
-        int[][] maze3 = {{0,0,1,0,0},{0,0,0,0,0},{0,0,0,1,0},{1,1,0,1,1},{0,0,0,0,0}};
-        int[] start3 = {0,4};
-        int[] dest3 = {4,1};
-
-        TheMaze theMaze = new TheMaze();
-        System.out.println(theMaze.hasPath(maze, start, dest));
-//        System.out.println(theMaze.hasPath(maze2, start2, dest2));
-//        System.out.println(theMaze.hasPath(maze3, start3, dest3));
+    @Test
+    void test3() {
+        int[] start = {0,4};
+        int[] dest = {4,1};
+        Assertions.assertFalse(hasPath(maze, start, dest));
     }
 }
