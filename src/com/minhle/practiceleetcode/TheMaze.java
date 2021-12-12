@@ -30,16 +30,15 @@ public class TheMaze {
                 return true;
             }
             for (int i = 0; i < 4; i ++) {
-                int nextX = thisX + dR[i];
-                int nextY = thisY + dC[i];
+                int nextX = thisX;
+                int nextY = thisY;
                 boolean inBound = 0 <= nextX && nextX < row && 0 <= nextY && nextY < column;
                 if (!inBound) {
                     continue;
                 }
-                while (0 <= nextX + dR[i] && nextX + dR[i] < row && 0 <= nextY + dC[i] && nextY + dC[i] < column && maze[nextX][nextY] == 0) {
+                while (0 <= nextX + dR[i] && nextX + dR[i] < row && 0 <= nextY + dC[i] && nextY + dC[i] < column && maze[nextX + dR[i]][nextY + dC[i]] == 0) {
                     nextX += dR[i];
                     nextY += dC[i];
-                    visited[nextX][nextY] = 1;
                 }
 
                 if (visited[nextX][nextY] == 0) {
@@ -63,7 +62,7 @@ public class TheMaze {
 
         int[][] maze3 = {{0,0,1,0,0},{0,0,0,0,0},{0,0,0,1,0},{1,1,0,1,1},{0,0,0,0,0}};
         int[] start3 = {0,4};
-        int[] dest3 = {1,2};
+        int[] dest3 = {4,1};
 
         TheMaze theMaze = new TheMaze();
         System.out.println(theMaze.hasPath(maze, start, dest));
