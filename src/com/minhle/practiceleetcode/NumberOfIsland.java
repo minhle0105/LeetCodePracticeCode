@@ -9,18 +9,6 @@ public class NumberOfIsland {
     static final int[] dR = {-1, 1, 0, 0};
     static final int[] dC = {0, 0, -1, 1};
 
-    private static int[] checkIfMapIsFullyVisited() {
-        int[] point = {-1,-1};
-        for (int i = 0; i < visited.length; i++) {
-            for (int j = 0; j < visited[i].length; j++) {
-                if (visited[i][j] == 0) {
-                    return new int[]{i,j};
-                }
-            }
-        }
-        return point;
-    }
-
     public int numIslands(char[][] grid) {
         int numberOfRows = grid.length;
         int numberOfColumns = grid[0].length;
@@ -33,18 +21,21 @@ public class NumberOfIsland {
             }
         }
         int count = 0;
-        while (true) {
-            int[] nextStartPoint = checkIfMapIsFullyVisited();
-            if (nextStartPoint[0] == -1) {
-                return count;
+        for (int i = 0; i < visited.length; i++) {
+            for (int j = 0; j < visited[i].length; j++) {
+                if (bfs(grid, new int[]{i,j}) == 1) {
+                    count++;
+                }
             }
-            bfs(grid, nextStartPoint);
-            count++;
         }
+        return count;
 
     }
 
-    private static void bfs(char[][] grid, int[] startPoint) {
+    private static int bfs(char[][] grid, int[] startPoint) {
+        if (visited[startPoint[0]][startPoint[1]] == 1) {
+            return -1;
+        }
         Queue<Integer> queue = new LinkedList<>();
         queue.add(startPoint[0]);
         queue.add(startPoint[1]);
@@ -65,5 +56,6 @@ public class NumberOfIsland {
                 }
             }
         }
+        return 1;
     }
 }
