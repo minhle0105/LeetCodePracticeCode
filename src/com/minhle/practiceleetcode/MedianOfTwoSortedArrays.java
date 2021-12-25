@@ -47,9 +47,7 @@ public class MedianOfTwoSortedArrays {
             return (double) (firstHalfHeap.remove() + secondHalfHeap.remove())/2;
         }
         else {
-            if (firstHalfHeap.size() > secondHalfHeap.size())
-                return firstHalfHeap.remove();
-            return secondHalfHeap.remove();
+            return firstHalfHeap.size() > secondHalfHeap.size() ? firstHalfHeap.remove() : secondHalfHeap.remove();
         }
     }
 
