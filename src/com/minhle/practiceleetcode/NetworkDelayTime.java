@@ -5,106 +5,88 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-class Point {
-    private final int id;
-    private final Map<Integer, Integer> adjacencyWeight;
+class Point implements Comparable<Point> {
+    public int id;
+    public int distance;
 
-    public Point(int id) {
+    public Point(int id, int distance) {
         this.id = id;
-        this.adjacencyWeight = new HashMap<>();
+        this.distance = distance;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public boolean hasNeighbors() {
-        return this.adjacencyWeight.size() > 0;
-    }
-
-    public Map<Integer, Integer> getAdjacencyWeight() {
-        return adjacencyWeight;
-    }
-
-    public void addNeighbor(int neighborId) {
-        this.adjacencyWeight.put(neighborId, 0);
-    }
-
-    public void addNeighbor(int neighborId, int weight) {
-        this.adjacencyWeight.put(neighborId, weight);
-    }
-
-    public int getWeighToANeighbor(int neighborId) {
-        return this.adjacencyWeight.get(neighborId);
-    }
-
-    public Set<Integer> getAllNeighbors() {
-        return this.adjacencyWeight.keySet();
-    }
-
-    public boolean containsNeighbor(int neighborId) {
-        return this.adjacencyWeight.containsKey(neighborId);
+    @Override
+    public int compareTo(Point o) {
+        return Integer.compare(this.distance, o.distance);
     }
 }
 
 
 public class NetworkDelayTime {
-    public int networkDelayTime(int[][] times, int n, int k) {
-        List<Point> graph = new ArrayList<>();
+
+    static List<List<Point>> graph;
+    static int[] distance;
+    static int[] path;
+    static int[] visited;
+
+    private static void prepareData(int[][] times, int n) {
+        graph = new ArrayList<>();
         for (int i = 0; i < n + 1; i++) {
-            graph.add(new Point(i));
+            graph.add(new ArrayList<>());
         }
-
-        List<Integer> visited = new ArrayList<>();
-        List<Integer> levels = new ArrayList<>();
+        for (int[] data : times) {
+            int a = data[0];
+            int b = data[1];
+            int c = data[2];
+            graph.get(a).add(new Point(b, c));
+        }
+        distance = new int[graph.size()];
+        path = new int[graph.size()];
+        visited = new int[graph.size()];
         for (int i = 0; i < graph.size(); i++) {
-            visited.add(0);
-            levels.add(0);
+            distance[i] = Integer.MAX_VALUE;
+            path[i] = -1;
+            visited[i] = 0;
         }
+    }
 
-        for (int[] row : times) {
-            graph.get(row[0]).addNeighbor(row[1], row[2]);
-        }
-
-        Stack<Point> stack = new Stack<>();
-        stack.push(graph.get(k));
-        visited.set(graph.get(k).getId(), 1);
-
-        while (!stack.isEmpty()) {
-            Point thisPoint = stack.pop();
-            Set<Integer> neighborIds = thisPoint.getAllNeighbors();
-            for (Integer neighbor : neighborIds) {
-                Point nextPoint = graph.get(neighbor);
-                if (visited.get(nextPoint.getId()) == 0) {
-                    stack.push(graph.get(nextPoint.getId()));
-                    visited.set(nextPoint.getId(), 1);
-                    int distanceToAdd;
-                    if (graph.get(k).containsNeighbor(nextPoint.getId())) {
-                        int directDistance = graph.get(k).getWeighToANeighbor(nextPoint.getId());
-                        int indirectDistance = levels.get(thisPoint.getId()) + thisPoint.getWeighToANeighbor(nextPoint.getId());
-                        distanceToAdd = Math.min(directDistance, indirectDistance);
-                    }
-                    else {
-                        distanceToAdd = levels.get(thisPoint.getId()) + thisPoint.getWeighToANeighbor(nextPoint.getId());
-                    }
-                    levels.set(nextPoint.getId(), distanceToAdd);
+    public int networkDelayTime(int[][] times, int n, int k) {
+        PriorityQueue<Point> heap = new PriorityQueue<>();
+        prepareData(times, n);
+        heap.add(new Point(k, 0));
+        distance[k] = 0;
+        visited[k] = 1;
+        while (!heap.isEmpty()) {
+            Point currentPoint = heap.remove();
+            int currentPointId = currentPoint.id;
+            int currentDistance = currentPoint.distance;
+            if (distance[currentPointId] != currentDistance) {
+                continue;
+            }
+            for (int i = 0; i < graph.get(currentPointId).size(); i++) {
+                Point nextPoint = graph.get(currentPointId).get(i);
+                if (currentDistance + nextPoint.distance < distance[nextPoint.id]) {
+                    distance[nextPoint.id] = currentDistance + nextPoint.distance;
+                    heap.add(new Point(nextPoint.id, distance[nextPoint.id]));
+                    path[nextPoint.id] = currentPointId;
+                    visited[nextPoint.id] = 1;
                 }
             }
         }
-
-        for (int i = 1; i < visited.size(); i++) {
-            if (visited.get(i) == 0) {
+        int maxDistance = Integer.MIN_VALUE;
+        for (int d : distance) {
+            if (d > maxDistance && d != Integer.MAX_VALUE) {
+                maxDistance = d;
+            }
+        }
+        for (int i = 1; i < visited.length; i++) {
+            if (visited[i] == 0) {
                 return -1;
             }
         }
-
-        int maxVal = -1;
-        for (Integer i : levels) {
-            if (i > maxVal) {
-                maxVal = i;
-            }
+        if (maxDistance == 0) {
+            return -1;
         }
-        return maxVal;
+        return maxDistance;
     }
 
     @Test
@@ -129,9 +111,9 @@ public class NetworkDelayTime {
 
     @Test
     void failedTest() {
-        int[][] times = {{1,2,1},{2,3,2},{1,3,4}};
+        int[][] times = {{1,2,1},{2,3,2},{1,3,1}};
         int n = 3;
-        int k = 1;
+        int k = 2;
         int expected = -1;
         int actual = networkDelayTime(times, n, k);
         Assertions.assertEquals(expected, actual);
