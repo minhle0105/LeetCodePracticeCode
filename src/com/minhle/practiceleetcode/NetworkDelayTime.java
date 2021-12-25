@@ -72,19 +72,21 @@ public class NetworkDelayTime {
                 }
             }
         }
-        int maxDistance = Integer.MIN_VALUE;
-        for (int d : distance) {
-            if (d > maxDistance && d != Integer.MAX_VALUE) {
-                maxDistance = d;
-            }
-        }
+
+        // nếu có điểm chưa được thăm -> tín hiệu không truyền được hết -> -1
         for (int i = 1; i < visited.length; i++) {
             if (visited[i] == 0) {
                 return -1;
             }
         }
-        if (maxDistance == 0) {
-            return -1;
+
+        // đến được chỗ này tức là tất cả các điểm đều đã được thăm, mỗi điểm sẽ đang có thời gian truyền nhỏ nhất.
+        // -> phải tìm khoảng cách truyền xa nhất
+        int maxDistance = Integer.MIN_VALUE;
+        for (int d : distance) {
+            if (d > maxDistance && d != Integer.MAX_VALUE) {
+                maxDistance = d;
+            }
         }
         return maxDistance;
     }
