@@ -10,10 +10,12 @@ import java.util.PriorityQueue;
 class Airport implements Comparable<Airport> {
     int id;
     int cost;
+    int distance;
 
-    public Airport(int id, int cost) {
+    public Airport(int id, int cost, int distance) {
         this.id = id;
         this.cost = cost;
+        this.distance = distance;
     }
 
 
@@ -38,12 +40,12 @@ public class CheapestFlightWithinKStops {
             int from = flight[0];
             int to = flight[1];
             int cost = flight[2];
-            graph.get(from).add(new Airport(to, cost));
+            graph.get(from).add(new Airport(to, cost, 0));
         }
         distance = new int[graph.size()];
         cost = new int[graph.size()];
         for (int i = 0; i < graph.size(); i++) {
-            distance[i] = 0;
+            distance[i] = Integer.MAX_VALUE;
             cost[i] = Integer.MAX_VALUE;
         }
     }
@@ -51,16 +53,20 @@ public class CheapestFlightWithinKStops {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
         PriorityQueue<Airport> heap = new PriorityQueue<>();
         prepareData(n, flights);
-        heap.add(new Airport(src, 0));
+        heap.add(new Airport(src, 0, 0));
         cost[src] = 0;
+        distance[src] = -1;
         while (!heap.isEmpty()) {
             Airport thisAirport = heap.remove();
             int currentAirportId = thisAirport.id;
             int currentAirportCost = thisAirport.cost;
+            if (thisAirport.id == dst) {
+                return cost[thisAirport.id];
+            }
             if (cost[currentAirportId] != currentAirportCost) {
                 continue;
             }
-            if (distance[thisAirport.id] == k + 1) {
+            if (thisAirport.distance > k) {
                 continue;
             }
             for (int i = 0; i < graph.get(currentAirportId).size(); i++) {
@@ -68,7 +74,11 @@ public class CheapestFlightWithinKStops {
                 if (currentAirportCost + nextAirport.cost < cost[nextAirport.id]) {
                     cost[nextAirport.id] = currentAirportCost + nextAirport.cost;
                     distance[nextAirport.id] = distance[currentAirportId] + 1;
-                    heap.add(new Airport(nextAirport.id, cost[nextAirport.id]));
+                    heap.add(new Airport(nextAirport.id, cost[nextAirport.id], distance[nextAirport.id]));
+                }
+                else if (nextAirport.distance < distance[nextAirport.id]) {
+                    heap.add(new Airport(nextAirport.id, cost[nextAirport.id], nextAirport.distance));
+                    distance[nextAirport.id] = nextAirport.distance;
                 }
             }
         }
