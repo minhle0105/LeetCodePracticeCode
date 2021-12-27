@@ -19,7 +19,7 @@ class Employee {
 
 public class EmployeeImportance {
 
-    private static Map<Integer, Employee> prepareData(List<Employee> employees, int id) {
+    private static Map<Integer, Employee> prepareData(List<Employee> employees) {
         Map<Integer, Employee> employeeHashMap = new HashMap<>();
         for (Employee e : employees) {
             employeeHashMap.put(e.id, e);
@@ -28,7 +28,7 @@ public class EmployeeImportance {
     }
 
     public int getImportance(List<Employee> employees, int id) {
-        Map<Integer, Employee> employeeHashMap = prepareData(employees, id);
+        Map<Integer, Employee> employeeHashMap = prepareData(employees);
         return dfsR(employeeHashMap, id);
     }
 
