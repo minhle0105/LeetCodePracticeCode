@@ -47,8 +47,6 @@ public class DFSWithTree {
         return inorder_R(root, result);
     }
 
-
-
     private static List<Node> inorder_R(Node root, List<Node> result) {
         if (root == null) {
             return result;
