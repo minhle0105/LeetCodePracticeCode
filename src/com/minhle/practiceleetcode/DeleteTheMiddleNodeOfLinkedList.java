@@ -4,6 +4,7 @@ public class DeleteTheMiddleNodeOfLinkedList {
     public ListNode deleteMiddle(ListNode head) {
         ListNode slow = new ListNode(-1, head);
         ListNode fast = head;
+        // if only has one node
         if (fast.next == null) {
             return null;
         }
