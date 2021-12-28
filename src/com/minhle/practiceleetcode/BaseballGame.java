@@ -1,5 +1,8 @@
 package com.minhle.practiceleetcode;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,27 +25,51 @@ public class BaseballGame {
             }
             catch (Exception e) {
                 switch (o) {
-                    case "+" -> {
+                    case "+":
                         int prev1 = scores.get(n - 1);
                         int prev2 = scores.get(n - 2);
                         scores.add(prev1 + prev2);
                         currentSum += prev1 + prev2;
                         n++;
-                    }
-                    case "D" -> {
+                        break;
+                    case "D":
                         int prev = scores.get(n - 1);
                         scores.add(prev * 2);
                         currentSum += prev * 2;
                         n++;
-                    }
-                    case "C" -> {
-                        int prev = scores.remove(n - 1);
+                        break;
+                    case "C":
+                        prev = scores.remove(n - 1);
                         currentSum -= prev;
                         n--;
-                    }
+                        break;
                 }
             }
         }
         return currentSum;
+    }
+
+    @Test
+    void test1() {
+        String[] ops = {"5","2","C","D","+"};
+        int expected = 30;
+        int actual = calPoints(ops);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void test2() {
+        String[] ops = {"5","-2","4","C","D","9","+","+"};
+        int expected = 27;
+        int actual = calPoints(ops);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void test3() {
+        String[] ops = {"1"};
+        int expected = 1;
+        int actual = calPoints(ops);
+        Assertions.assertEquals(expected, actual);
     }
 }
