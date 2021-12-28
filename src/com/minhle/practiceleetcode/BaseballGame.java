@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class BaseballGame {
 
@@ -14,34 +15,31 @@ public class BaseballGame {
     // C remove the previous score
     public int calPoints(String[] ops) {
         int currentSum = 0;
-        List<Integer> scores = new LinkedList<>();
-        int n = 0;
+        Stack<Integer> scores = new Stack<>();
         for (String o : ops) {
             try {
                 int oInt = Integer.parseInt(o);
                 currentSum += oInt;
-                scores.add(oInt);
-                n++;
+                scores.push(oInt);
             }
             catch (Exception e) {
                 switch (o) {
                     case "+":
-                        int prev1 = scores.get(n - 1);
-                        int prev2 = scores.get(n - 2);
-                        scores.add(prev1 + prev2);
-                        currentSum += prev1 + prev2;
-                        n++;
+                        int[] temp = {scores.pop(), scores.pop()};
+                        int sum = temp[0] + temp[1];
+                        scores.push(temp[1]);
+                        scores.push(temp[0]);
+                        scores.push(sum);
+                        currentSum += sum;
                         break;
                     case "D":
-                        int prev = scores.get(n - 1);
+                        int prev = scores.peek();
                         scores.add(prev * 2);
                         currentSum += prev * 2;
-                        n++;
                         break;
                     case "C":
-                        prev = scores.remove(n - 1);
+                        prev = scores.pop();
                         currentSum -= prev;
-                        n--;
                         break;
                 }
             }
