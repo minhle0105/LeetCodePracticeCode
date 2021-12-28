@@ -17,31 +17,27 @@ public class BaseballGame {
         int currentSum = 0;
         Stack<Integer> scores = new Stack<>();
         for (String o : ops) {
-            try {
+            if (o.equals("+")) {
+                int[] temp = {scores.pop(), scores.pop()};
+                int sum = temp[0] + temp[1];
+                scores.push(temp[1]);
+                scores.push(temp[0]);
+                scores.push(sum);
+                currentSum += sum;
+            }
+            else if (o.equals("C")) {
+                int prev = scores.pop();
+                currentSum -= prev;
+            }
+            else if (o.equals("D")) {
+                int prev = scores.peek();
+                scores.add(prev * 2);
+                currentSum += prev * 2;
+            }
+            else {
                 int oInt = Integer.parseInt(o);
                 currentSum += oInt;
                 scores.push(oInt);
-            }
-            catch (Exception e) {
-                switch (o) {
-                    case "+":
-                        int[] temp = {scores.pop(), scores.pop()};
-                        int sum = temp[0] + temp[1];
-                        scores.push(temp[1]);
-                        scores.push(temp[0]);
-                        scores.push(sum);
-                        currentSum += sum;
-                        break;
-                    case "D":
-                        int prev = scores.peek();
-                        scores.add(prev * 2);
-                        currentSum += prev * 2;
-                        break;
-                    case "C":
-                        prev = scores.pop();
-                        currentSum -= prev;
-                        break;
-                }
             }
         }
         return currentSum;
