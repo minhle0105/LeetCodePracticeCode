@@ -7,21 +7,26 @@ import java.util.*;
 
 public class SecondLargestDigitInAString {
     public int secondHighest(String s) {
-        Set<Integer> nums = new HashSet<>();
+        int largest = -1;
         for (char c : s.toCharArray()) {
             if (Character.isDigit(c)) {
                 int i = Integer.parseInt(String.valueOf(c));
-                nums.add(i);
+                if (i > largest) {
+                    largest = i;
+                }
             }
         }
-        List<Integer> numsList = new ArrayList<>(nums);
-        Collections.sort(numsList);
-        try {
-            return numsList.get(numsList.size() - 2);
+
+        int secondLargest = -1;
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c)) {
+                int i = Integer.parseInt(String.valueOf(c));
+                if (i > secondLargest && i != largest) {
+                    secondLargest = i;
+                }
+            }
         }
-        catch (Exception e) {
-            return -1;
-        }
+        return secondLargest;
     }
 
     @Test
