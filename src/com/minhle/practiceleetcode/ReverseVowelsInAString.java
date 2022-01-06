@@ -65,6 +65,8 @@ public class ReverseVowelsInAString {
                 rightPointer--;
             }
         }
+
+        // lấy kết quả dưới dạng String
         StringBuilder result = new StringBuilder();
         for (char c : sToChar) {
             result.append(c);
