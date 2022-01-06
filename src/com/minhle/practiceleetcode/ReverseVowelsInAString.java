@@ -26,6 +26,7 @@ public class ReverseVowelsInAString {
         vowels.add('i');
         vowels.add('I');
         while (leftPointer <= rightPointer) {
+            // nếu kí tự đang xét không phải chữ cái
             if (!Character.isLetter(sToChar[leftPointer])) {
                 leftPointer++;
                 continue;
@@ -34,6 +35,8 @@ public class ReverseVowelsInAString {
                 rightPointer--;
                 continue;
             }
+
+            // nếu kí tự đang xét ở cả 2 bên đều là nguyên âm thì swap
             if (vowels.contains(sToChar[leftPointer]) && vowels.contains(sToChar[rightPointer])) {
                 char temp = sToChar[leftPointer];
                 sToChar[leftPointer] = sToChar[rightPointer];
@@ -41,16 +44,22 @@ public class ReverseVowelsInAString {
                 leftPointer++;
                 rightPointer--;
             }
+
+            // nếu chỉ có bên trái là nguyên âm thì dò đến nguyên âm cần swap từ bên phải
             else if (vowels.contains(sToChar[leftPointer])) {
                 while (!vowels.contains(sToChar[rightPointer])) {
                     rightPointer--;
                 }
             }
+
+            // nếu chỉ có bên phải là nguyên âm thì dò đến nguyên âm cần swap từ bên trái
             else if (vowels.contains(sToChar[rightPointer])) {
                 while (!vowels.contains(sToChar[leftPointer])) {
                     leftPointer++;
                 }
             }
+
+            // nếu cả 2 bên không có nguyên âm thì tiếp tục đẩy 2 pointers đi
             else {
                 leftPointer++;
                 rightPointer--;
