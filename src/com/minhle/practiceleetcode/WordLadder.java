@@ -32,12 +32,8 @@ public class WordLadder {
         if (!map.containsKey(endWord)) {
             return 0;
         }
-        for (String word : wordList) {
-            if (isConnected(beginWord, word)) {
-                map.get(beginWord).add(word);
-                map.get(word).add(beginWord);
-            }
-        }
+
+        wordList.add(beginWord);
 
         for (int i = 0; i < wordList.size() - 1; i++) {
             String word1 = wordList.get(i);
