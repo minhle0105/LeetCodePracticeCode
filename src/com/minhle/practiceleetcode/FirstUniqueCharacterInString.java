@@ -28,7 +28,7 @@ class MyCharacter implements Comparable<MyCharacter> {
 
 public class FirstUniqueCharacterInString {
 
-    public int firstUniqChar(String s) {
+    public int firstUniqCharUsingSort(String s) {
         Map<Character, Integer> map = new HashMap<>();
         for (char c : s.toCharArray()) {
             if (map.containsKey(c)) {
@@ -49,49 +49,57 @@ public class FirstUniqueCharacterInString {
         return -1;
     }
 
-//    public int firstUniqChar(String s) {
-//        HashMap<Character, Integer> hashMap = new HashMap<>();
-//        for (int i = 0; i < s.length(); i++) {
-//            if (hashMap.containsKey(s.charAt(i))) {
-//                hashMap.put(s.charAt(i), hashMap.get(s.charAt(i)) + 1);
-//            }
-//            else {
-//                hashMap.put(s.charAt(i), 1);
-//            }
-//        }
-//        for (int i = 0; i < s.length(); i++) {
-//            if (hashMap.get(s.charAt(i)) == 1) {
-//                return i;
-//            }
-//        }
-//        return -1;
-//    }
+    public int firstUniqChar(String s) {
+        Map<Character, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (hashMap.containsKey(s.charAt(i))) {
+                hashMap.put(s.charAt(i), hashMap.get(s.charAt(i)) + 1);
+            }
+            else {
+                hashMap.put(s.charAt(i), 1);
+            }
+        }
+        for (int i = 0; i < s.length(); i++) {
+            if (hashMap.get(s.charAt(i)) == 1) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     @Test
     void firstTest() {
         int expected = 0;
-        int actual = firstUniqChar("leetcode");
-        Assertions.assertEquals(expected, actual);
+        String s = "leetcode";
+        int actual1 = firstUniqChar(s);
+        int actual2 = firstUniqCharUsingSort(s);
+        Assertions.assertTrue(expected == actual1 && expected == actual2);
     }
 
     @Test
     void secondTest() {
         int expected = 2;
-        int actual = firstUniqChar("loveleetcode");
-        Assertions.assertEquals(expected, actual);
+        String s = "loveleetcode";
+        int actual1 = firstUniqChar(s);
+        int actual2 = firstUniqCharUsingSort(s);
+        Assertions.assertTrue(expected == actual1 && expected == actual2);
     }
 
     @Test
     void lastTest() {
         int expected = -1;
-        int actual = firstUniqChar("aabb");
-        Assertions.assertEquals(expected, actual);
+        String s = "aabb";
+        int actual1 = firstUniqChar(s);
+        int actual2 = firstUniqCharUsingSort(s);
+        Assertions.assertTrue(expected == actual1 && expected == actual2);
     }
 
     @Test
     void failTest() {
         int expected = 0;
-        int actual = firstUniqChar("z");
-        Assertions.assertEquals(expected, actual);
+        String s = "z";
+        int actual1 = firstUniqChar(s);
+        int actual2 = firstUniqCharUsingSort(s);
+        Assertions.assertTrue(expected == actual1 && expected == actual2);
     }
 }
