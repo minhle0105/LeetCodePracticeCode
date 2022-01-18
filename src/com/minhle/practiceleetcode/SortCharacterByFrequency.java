@@ -1,10 +1,8 @@
 package com.minhle.practiceleetcode;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.*;
 
-class CharFreq {
+class CharFreq implements Comparable<CharFreq> {
     private char value;
     private int frequency;
 
@@ -28,11 +26,16 @@ class CharFreq {
     public void setFrequency(int frequency) {
         this.frequency = frequency;
     }
+
+    @Override
+    public int compareTo(CharFreq o) {
+        return Integer.compare(o.frequency, this.frequency);
+    }
 }
 
 public class SortCharacterByFrequency {
-    public static String frequencySort(String s) {
-        String result = "";
+
+    private Map<Character, Integer> countChar(String s) {
         Map<Character, Integer> map = new HashMap<>();
         for (char c : s.toCharArray()) {
             if (map.containsKey(c)) {
@@ -42,39 +45,55 @@ public class SortCharacterByFrequency {
                 map.put(c, 1);
             }
         }
+        return map;
+    }
 
+    public String frequencySortUsingList(String s) {
+        StringBuilder result = new StringBuilder();
+        Map<Character, Integer> map = countChar(s);
         List<CharFreq> list = new ArrayList<>();
-        for (char c : s.toCharArray()) {
+        for (char c : map.keySet()) {
             CharFreq charFreq = new CharFreq(c, map.get(c));
             list.add(charFreq);
         }
 
-        PriorityQueue<CharFreq> heap = new PriorityQueue<>(new Comparator<CharFreq>() {
-            @Override
-            public int compare(CharFreq o1, CharFreq o2) {
-                int o1Freq = o1.getFrequency();
-                int o2Freq = o2.getFrequency();
-                return Integer.compare(o2Freq, o1Freq);
-            }
-        });
+        Collections.sort(list);
 
         for (CharFreq charFreq : list) {
-            heap.add(charFreq);
+            for (int i = 0; i < charFreq.getFrequency(); i++) {
+                result.append(charFreq.getValue());
+            }
         }
-        while (!heap.isEmpty()) {
-            result += heap.remove().getValue();
-        }
-        char[] chars = result.toCharArray();
-        Arrays.sort(chars);
-        String finalResult = "";
-        for (char c : chars) {
-            finalResult += c;
-        }
-        return finalResult;
+        return result.toString();
     }
 
-    public static void main(String[] args) {
-        String s = "tree";
-        System.out.println(frequencySort(s));
+
+    public String frequencySortUsingHeap(String s) {
+        StringBuilder result = new StringBuilder();
+        Map<Character, Integer> map = countChar(s);
+        for (char c : s.toCharArray()) {
+            if (map.containsKey(c)) {
+                map.put(c, map.get(c) + 1);
+            }
+            else {
+                map.put(c, 1);
+            }
+        }
+
+        PriorityQueue<CharFreq> list = new PriorityQueue<>();
+        for (char c : map.keySet()) {
+            CharFreq charFreq = new CharFreq(c, map.get(c));
+            list.add(charFreq);
+        }
+
+        while (!list.isEmpty()) {
+            CharFreq charFreq = list.remove();
+            for (int i = 0; i < charFreq.getFrequency(); i++) {
+                result.append(charFreq.getValue());
+            }
+        }
+        return result.toString();
     }
+
+
 }
