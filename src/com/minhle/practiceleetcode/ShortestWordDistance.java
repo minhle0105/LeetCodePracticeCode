@@ -28,6 +28,24 @@ public class ShortestWordDistance {
         return shortestDistance;
     }
 
+    public int shortestDistanceDynamic(String[] wordsDict, String word1, String word2) {
+        int indexWord1 = -1;
+        int indexWord2 = -1;
+        int shortestDistance = Integer.MAX_VALUE;
+        for (int i = 0; i < wordsDict.length; i++) {
+            if (wordsDict[i].equals(word1)) {
+                indexWord1 = i;
+            }
+            if (wordsDict[i].equals(word2)) {
+                indexWord2 = i;
+            }
+            if (indexWord1 != -1 && indexWord2 != -1) {
+                shortestDistance = Math.min(shortestDistance, Math.abs(indexWord1 - indexWord2));
+            }
+        }
+        return shortestDistance;
+    }
+
     @Test
     void firstTest() {
         String[] wordsDict = {"practice", "makes", "perfect", "coding", "makes"};
@@ -45,6 +63,26 @@ public class ShortestWordDistance {
         String word2 = "coding";
         int expected = 1;
         int actual = shortestDistance(wordsDict, word1, word2);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void firstTest1() {
+        String[] wordsDict = {"practice", "makes", "perfect", "coding", "makes"};
+        String word1 = "coding";
+        String word2 = "practice";
+        int expected = 3;
+        int actual = shortestDistanceDynamic(wordsDict, word1, word2);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void secondTest2() {
+        String[] wordsDict = {"practice", "makes", "perfect", "coding", "makes"};
+        String word1 = "makes";
+        String word2 = "coding";
+        int expected = 1;
+        int actual = shortestDistanceDynamic(wordsDict, word1, word2);
         Assertions.assertEquals(expected, actual);
     }
 }
