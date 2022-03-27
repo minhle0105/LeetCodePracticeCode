@@ -7,77 +7,59 @@ import java.util.Arrays;
 
 public class SearchInSortedArray {
 
-    private int getBreakIndex(int[] nums) {
-        int breakIndex = -1;
-
-        int left = 0;
-        int right = nums.length - 1;
-
-        while (left <= right) {
-            int mid = (left + right) / 2;
-            if (mid == nums.length - 1) {
-                break;
-            }
-            if (nums[mid] > nums[mid+1]) {
-                breakIndex = mid + 1;
-                break;
-            }
-            else {
-                if (nums[mid] < nums[left]) {
-                    right = mid - 1;
-                }
-                else {
-                    left = mid + 1;
-                }
-            }
+    public int search(int[] nums, int target) {
+        int pivot = searchPivot(nums);
+        if (pivot == -1) {
+            return binarySearch(nums, 0, nums.length - 1, target);
         }
-        return breakIndex;
+        else {
+            int l = binarySearch(nums, 0, pivot - 1, target);
+            int r = binarySearch(nums, pivot, nums.length - 1, target);
+            return l == -1 ? r : l;
+        }
     }
 
-    public int search(int[] nums, int target) {
-        // first, the array might be rotated so we find the index at which the array was rotated
-        int breakIndex = getBreakIndex(nums);
-
-        // if breakIndex != -1, then the array was rotated, we perform binary search with left and right part
-        if (breakIndex != -1) {
-            int isInLeftHalf = isInArr(Arrays.copyOfRange(nums, 0, breakIndex), target);
-            if (isInLeftHalf != -1) {
-                return isInLeftHalf;
-            }
-            int isInRightHalf = isInArr(Arrays.copyOfRange(nums, breakIndex, nums.length), target);
-            if (isInRightHalf != -1) {
-                return breakIndex + isInRightHalf;
-            }
+    private int binarySearch(int[] nums, int left, int right, int target) {
+        if (left > right) {
             return -1;
         }
-
-        // else, the array is already sorted, we perform an original binary search with the whole array
-        else {
-            return isInArr(nums, target);
+        int mid = (left + right) / 2;
+        if (nums[mid] == target) {
+            return mid;
         }
-
+        else if (nums[mid] < target) {
+            return binarySearch(nums, mid + 1, right, target);
+        }
+        else {
+            return binarySearch(nums, left, mid - 1, target);
+        }
     }
 
-
-    private int isInArr(int[] nums, int target) {
-        if (nums.length == 1) {
-            return nums[0] == target ? 0 : -1;
+    private int searchPivot(int[] nums) {
+        if (nums.length == 1) return 0;
+        if (nums[0] < nums[nums.length - 1]) {
+            return 0;
         }
+        int pivot = -1;
         int left = 0;
         int right = nums.length - 1;
         while (left <= right) {
             int mid = (left + right) / 2;
-            if (nums[mid] == target) {
+            if (nums[mid] > nums[mid + 1]) {
+                return mid + 1;
+            }
+
+            if (nums[mid - 1] > nums[mid]) {
                 return mid;
             }
-            else if (nums[mid] < target) {
+            if (nums[mid] > nums[0]) {
                 left = mid + 1;
             }
             else {
                 right = mid - 1;
             }
         }
-        return -1;
+        return pivot;
     }
 
     @Test
