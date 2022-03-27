@@ -7,15 +7,10 @@ public class MaximumSubarray {
         int result = nums[0];
         int[] subArraySum = new int[nums.length];
         subArraySum[0] = nums[0];
-        int currentStartIndex = 1;
-        for(int i = currentStartIndex; i < nums.length; i++) {
-            if (nums[i] > subArraySum[i-1] + nums[i]) {
-                currentStartIndex = i;
-                subArraySum[i] = nums[i];
-            }
-            else {
-                subArraySum[i] = subArraySum[i-1] + nums[i];
-            }
+        for (int i = 1; i < nums.length; i++) {
+            int sumIfStartFromHere = nums[i];
+            int sumIfContinue = nums[i] + subArraySum[i - 1];
+            subArraySum[i] = Math.max(sumIfStartFromHere, sumIfContinue);
         }
         for (Integer i : subArraySum) {
             if (i > result) {
