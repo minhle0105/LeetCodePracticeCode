@@ -3,39 +3,36 @@ package com.minhle.practiceleetcode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class HappyNumber {
+    Set<Integer> hasSeen;
     public boolean isHappy(int n) {
-        String xString = Integer.toString(n);
-        int result = 0;
-        HashMap<Integer, Integer> existedSum = new HashMap<>();
-        boolean isAHappyNumber = false;
-
-        while (true) {
-            result = 0;
-            for (int i = 0; i < xString.length(); i++) {
-                result += Math.pow(Integer.parseInt(String.valueOf(xString.charAt(i))), 2);
-            }
-            if (existedSum.containsKey(result)) {
-                break;
-            }
-            if (result == 1) {
-                isAHappyNumber = true;
-                break;
-            }
-            existedSum.put(result, 1);
-            xString = Integer.toString(result);
+        hasSeen = new HashSet<>();
+        return isHappyR(n);
+    }
+    private boolean isHappyR(int n) {
+        if (n == 1) {
+            return true;
         }
-        return isAHappyNumber;
+        int sum = 0;
+        while (n != 0) {
+            sum += Math.pow((n % 10), 2);
+            n /= 10;
+        }
+        if (hasSeen.contains(sum)) {
+            return false;
+        }
+        hasSeen.add(sum);
+        return isHappyR(sum);
     }
 
     @Test
     void firstTest() {
         boolean expected = true;
         boolean actual = isHappy(19);
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertTrue(actual);
     }
 
     @Test
