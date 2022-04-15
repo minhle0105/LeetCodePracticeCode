@@ -1,13 +1,16 @@
 package com.minhle.practiceleetcode;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.util.*;
 
-public class MovingAverage {
+public class MovingAverageFromDataStream {
     LinkedList<Integer> data;
     int windowSize;
     int currentWindowSum;
 
-    public MovingAverage(int size) {
+    public MovingAverageFromDataStream(int size) {
         data = new LinkedList<>();
         currentWindowSum = 0;
         windowSize = size;
