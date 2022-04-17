@@ -12,7 +12,6 @@ public class DesignBrowserHistory {
         currentPage = homepage;
         backward = new Stack<>();
         forward = new Stack<>();
-
     }
 
     public void visit(String url) {
@@ -50,24 +49,5 @@ public class DesignBrowserHistory {
             currentPage = backward.pop();
         }
         return currentPage;
-    }
-
-//    ["BrowserHistory","visit","visit","visit","back","back","forward","visit","forward","back","back"]
-//            [["leetcode.com"],["google.com"],["facebook.com"],["youtube.com"],[1],[1],[1],["linkedin.com"],[2],[2],[7]]
-
-
-    // leetcode -> google -> facebook -> youtube
-    public static void main(String[] args) {
-        DesignBrowserHistory browserHistory = new DesignBrowserHistory("leetcode.com");
-        browserHistory.visit("google.com");
-        browserHistory.visit("facebook.com");
-        browserHistory.visit("youtube.com");
-        System.out.println(browserHistory.back(1));
-        System.out.println(browserHistory.back(1));
-        System.out.println(browserHistory.forward(1));
-        browserHistory.visit("linkedin.com");
-        System.out.println(browserHistory.forward(2));
-        System.out.println(browserHistory.back(2));
-        System.out.println(browserHistory.back(7));
     }
 }
