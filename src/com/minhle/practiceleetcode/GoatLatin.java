@@ -48,7 +48,9 @@ public class GoatLatin {
 
     private String handleGeneral(String word, int index) {
         StringBuilder result = new StringBuilder(word);
-        result.append("a".repeat(Math.max(0, index)));
+        for (int i = 0; i < index; i++) {
+            result.append("a");
+        }
         return result.toString();
     }
 }
