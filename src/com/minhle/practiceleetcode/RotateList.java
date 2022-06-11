@@ -21,16 +21,16 @@ public class RotateList {
 
     private ListNode rotate(ListNode head, int k, int count, int n) {
         if (k == count) return head;
-        ListNode curr = head;
-        ListNode newTail = new ListNode(-1, curr);
+        ListNode newHead = head;
+        ListNode newTail = new ListNode(-1, newHead);
         int i = 0;
         while (i < n - 1) {
-            curr = curr.next;
+            newHead = newHead.next;
             newTail = newTail.next;
             i++;
         }
-        curr.next = head;
+        newHead.next = head;
         newTail.next = null;
-        return rotate(curr, k, count + 1, n);
+        return rotate(newHead, k, count + 1, n);
     }
 }
