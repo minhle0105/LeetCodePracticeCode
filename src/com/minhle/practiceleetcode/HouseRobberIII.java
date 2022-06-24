@@ -20,5 +20,4 @@ public class HouseRobberIII {
         int caseWithoutRoot = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
         return new int[]{caseWithRoot, caseWithoutRoot};
     }
-
 }
