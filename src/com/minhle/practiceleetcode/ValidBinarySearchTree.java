@@ -26,7 +26,7 @@ public class ValidBinarySearchTree {
                 return false;
             }
         }
-        return check(root.left) && check(root.right);
+        return check(root.left) & check(root.right);
     }
 
     private void traverse(TreeNode root, List<Integer> list) {
