@@ -1,9 +1,6 @@
 package com.minhle.practiceleetcode;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class OddEvenList {
+public class OddEvenLinkedList {
     public ListNode oddEvenList(ListNode head) {
         ListNode curr = head;
 
