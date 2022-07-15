@@ -9,14 +9,13 @@ public class RobotBoundedInCircle {
     int[] position;
 
     public boolean isRobotBounded(String instructions) {
-        vector = new int[]{0, 1};
-        position = new int[]{0, 0};
-        for (char instruction : instructions.toCharArray()) {
-            if (instruction == 'G') {
-                position[0] += vector[0];
-                position[1] += vector[1];
+        vector = new int[]{0,1};
+        position = new int[]{0,0};
+        for (char c : instructions.toCharArray()) {
+            if (c == 'G') {
+                goStraight();
             }
-            else if (instruction == 'L') {
+            else if (c == 'L') {
                 turnLeft();
             }
             else {
@@ -24,8 +23,13 @@ public class RobotBoundedInCircle {
             }
         }
         boolean samePosition = position[0] == 0 & position[1] == 0;
-        boolean sameDirection = vector[0] != 0 | vector[1] != 1;
-        return (samePosition) | (sameDirection);
+        boolean sameDirection = vector[0] == 0 & vector[1] == 1;
+        return !sameDirection | samePosition;
+    }
+
+    private void goStraight() {
+        position[0] += vector[0];
+        position[1] += vector[1];
     }
 
     private void turnLeft() {
