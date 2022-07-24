@@ -1,5 +1,9 @@
 package com.minhle.practiceleetcode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MinimumAbsoluteDifference {
     public List<List<Integer>> minimumAbsDifference(int[] arr) {
         int minAbs = Integer.MAX_VALUE;
