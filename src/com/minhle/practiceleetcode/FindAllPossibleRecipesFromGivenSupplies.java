@@ -23,7 +23,7 @@ public class FindAllPossibleRecipesFromGivenSupplies {
             this.recipeIndex.put(recipes[i], i);
         }
         for (String recipe : recipes) {
-            if (canMakeRecipe(recipe, new HashSet<>())) {
+            if (this.achievedRecipes.contains(recipe) | canMakeRecipe(recipe, new HashSet<>())) {
                 res.add(recipe);
                 achievedRecipes.add(recipe);
             }
