@@ -13,12 +13,10 @@ public class MinimumTimeToMakeRopeColorful {
         int maxTime;
         while (r < neededTime.length) {
             int l = r + 1;
+            maxTime = neededTime[r];
             while (l < neededTime.length && colors.charAt(l) == colors.charAt(r)) {
+                maxTime = Math.max(maxTime, neededTime[l]);
                 l++;
-            }
-            maxTime = Integer.MIN_VALUE;
-            for (int i = r; i < l; i++) {
-                maxTime = Math.max(maxTime, neededTime[i]);
             }
             totalTime -= maxTime;
             r = l;
