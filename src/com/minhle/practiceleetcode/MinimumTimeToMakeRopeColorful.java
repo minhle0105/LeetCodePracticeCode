@@ -4,40 +4,26 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 public class MinimumTimeToMakeRopeColorful {
-    static class Balloon {
-        char color;
-        int removedTime;
-
-        public Balloon(char color, int removedTime) {
-            this.color = color;
-            this.removedTime = removedTime;
-        }
-    }
     public int minCost(String colors, int[] neededTime) {
-        List<List<Balloon>> balloonGroups = new ArrayList<>();
         int r = 0;
         int totalTime = 0;
-        List<Balloon> balloons;
+        for (int time : neededTime) {
+            totalTime += time;
+        }
+        int maxTime;
         while (r < neededTime.length) {
-            balloons = new ArrayList<>();
             int l = r + 1;
             while (l < neededTime.length && colors.charAt(l) == colors.charAt(r)) {
                 l++;
             }
+            maxTime = Integer.MIN_VALUE;
             for (int i = r; i < l; i++) {
-                totalTime += neededTime[i];
-                balloons.add(new Balloon(colors.charAt(r), neededTime[i]));
-            }
-            balloonGroups.add(balloons);
-            r = l;
-        }
-        for (List<Balloon> group : balloonGroups) {
-            int maxTime = Integer.MIN_VALUE;
-            for (Balloon balloon : group) {
-                maxTime = Math.max(balloon.removedTime, maxTime);
+                maxTime = Math.max(maxTime, neededTime[i]);
             }
             totalTime -= maxTime;
+            r = l;
         }
+
         return totalTime;
     }
 
