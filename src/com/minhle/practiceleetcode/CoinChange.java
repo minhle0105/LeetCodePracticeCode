@@ -3,7 +3,6 @@ package com.minhle.practiceleetcode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
 
 public class CoinChange {
     public int coinChange(int[] coins, int amount) {
