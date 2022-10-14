@@ -10,9 +10,9 @@ public class DeleteNNodesAfterMNodesOfALinkedList {
         }
         int total = m + n;
         int totalCount = size / total;
-        return deleteNodes(head, m, n, size, totalCount, 0);
+        return deleteNodes(head, m, n, totalCount, 0);
     }
-    private ListNode deleteNodes(ListNode head, int m, int n, int size, int totalCount, int count) {
+    private ListNode deleteNodes(ListNode head, int m, int n, int totalCount, int count) {
         ListNode curr = head;
         int c = 0;
         if (count == totalCount) {
@@ -43,7 +43,7 @@ public class DeleteNNodesAfterMNodesOfALinkedList {
                 removedPart = removedPart.next;
                 c++;
             }
-            curr.next = deleteNodes(removedPart.next, m, n, size, totalCount, count + 1);
+            curr.next = deleteNodes(removedPart.next, m, n, totalCount, count + 1);
         }
         return head;
     }
