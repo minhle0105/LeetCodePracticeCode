@@ -2,7 +2,7 @@ package com.minhle.practiceleetcode;
 import java.util.*;
 
 public class ZigzagConversion {
-    public String convert(String s, int numRows) {
+    public static String convert(String s, int numRows) {
         if (numRows == 1) {
             return s;
         }
@@ -10,34 +10,33 @@ public class ZigzagConversion {
         for (char[] row : zigzag) {
             Arrays.fill(row, ' ');
         }
-        int ind = 0;
+        int index = 0;
         int currentR = 0;
         int currentC = 0;
-        int charFills = 0;
-        while (charFills < s.length() && ind < s.length()) {
-            while (currentR < numRows && charFills < s.length()) {
-                zigzag[currentR][currentC] = s.charAt(ind);
-                charFills++;
-                ind++;
+        while (index < s.length()) {
+            while (currentR < numRows && index < s.length()) {
+                zigzag[currentR][currentC] = s.charAt(index);
+                index++;
+
                 currentR++;
             }
             currentR-=2;
             currentC++;
-            while (currentR >= 0 && charFills < s.length()) {
-                zigzag[currentR][currentC] = s.charAt(ind);
-                charFills++;
-                ind++;
+            while (currentR >= 0 && index < s.length()) {
+                zigzag[currentR][currentC] = s.charAt(index);
+                index++;
+
                 currentC++;
                 currentR--;
             }
-            currentR += 2;
+            currentR+=2;
             currentC--;
         }
         StringBuilder res = new StringBuilder();
         for (int r = 0; r < numRows; r++) {
             for (int c = 0; c <= currentC; c++) {
                 char thisChar = zigzag[r][c];
-                if (thisChar == '.' | thisChar == ',' | Character.isAlphabetic(thisChar)) {
+                if (thisChar != ' ') {
                     res.append(thisChar);
                 }
             }
