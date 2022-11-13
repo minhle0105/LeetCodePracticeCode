@@ -28,9 +28,4 @@ public class ReverseWordsInAStringII {
             j = i;
         }
     }
-
-    public static void main(String[] args) {
-        char[] s = "the sky is blue".toCharArray();
-        reverseWords(s);
-    }
 }
