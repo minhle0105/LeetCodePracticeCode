@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PaintHouse {
+
+    // bottom-up dynamic programming
     int[][] dp;
     public int minCost(int[][] costs) {
         int nRows = costs.length;
