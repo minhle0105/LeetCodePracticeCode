@@ -57,14 +57,11 @@ public:
 
     bool insideCircle(int x, int y, const vector<int> &circle)
     {
-        double distanceFromCenterToPoint = distance(x, y, circle[0], circle[1]);
-        return distanceFromCenterToPoint <= (double) circle[2];
+        return distance(x, y, circle[0], circle[1])  <= (double) circle[2];
     }
 
     double distance(int x0, int y0, int x1, int y1)
     {
-        double res = (x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0);
-        return sqrt(res);
+        return sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
     }
 };
-
