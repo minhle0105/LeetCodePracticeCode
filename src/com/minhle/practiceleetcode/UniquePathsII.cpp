@@ -43,3 +43,64 @@ public:
         return dp.at(m - 1).at(n - 1);
     }
 };
+
+
+// Extra solution using backtracking. This solution does not pass all the test cases due to time-limit-exceeded.
+// However, it is correct in terms of logic.
+
+
+// class Solution {
+// public:
+//     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+//         int m = obstacleGrid.size();
+//         int n = obstacleGrid.at(0).size();
+//         if (obstacleGrid.at(0).at(0) == 1 || obstacleGrid.at(m - 1).at(n - 1) == 1)
+//         {
+//             return 0;
+//         }
+
+//         pair<int, int> current_cell = {0, 0};
+//         vector<vector<pair<int, int>>> all_paths;
+//         vector<pair<int, int>> current_path;
+//         set<pair<int, int>> visited;
+//         current_path.push_back(current_cell);
+//         visited.insert(current_cell);
+//         backtracking(obstacleGrid, current_cell, m, n, all_paths, current_path, visited);
+//         return all_paths.size();
+//     }
+
+//     void backtracking(const vector<vector<int>> &grid, const pair<int, int> &current_cell, int m, int n, vector<vector<pair<int, int>>> &all_paths, vector<pair<int, int>> &current_path, set<pair<int, int>> &visited)
+//     {
+//         if (current_cell.first == m - 1 && current_cell.second == n - 1)
+//         {
+//             all_paths.push_back(current_path);
+//             visited.erase(current_path.back());
+//             current_path.pop_back();
+//             return;
+//         }
+//         int row = current_cell.first;
+//         int col = current_cell.second;
+//         pair<int, int> next_right_cell = {row + 1, col};
+//         pair<int, int> next_below_cell = {row, col + 1};
+//         if (in_bound(next_right_cell, m, n) && visited.find(next_right_cell) == visited.end() && grid.at(row + 1).at(col) != 1)
+//         {
+//             visited.insert(next_right_cell);
+//             current_path.push_back(next_right_cell);
+//             backtracking(grid, next_right_cell, m, n, all_paths, current_path, visited);
+//         }
+
+//         if (in_bound(next_below_cell, m, n) && visited.find(next_below_cell) == visited.end() && grid.at(row).at(col + 1) != 1)
+//         {
+//             visited.insert(next_below_cell);
+//             current_path.push_back(next_below_cell);
+//             backtracking(grid, next_below_cell, m, n, all_paths, current_path, visited);
+//         }
+//         visited.erase(current_path.back());
+//         current_path.pop_back();
+//     }
+
+//     bool in_bound(const pair<int, int> &cell, int m, int n)
+//     {
+//         return cell.first >= 0 && cell.first < m && cell.second >= 0 && cell.second < n;
+//     }
+// };
