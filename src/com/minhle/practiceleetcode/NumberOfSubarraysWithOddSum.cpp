@@ -22,18 +22,10 @@ public:
         for (int i = 0; i < arr.size(); ++i)
         {
             prefix_sum.push_back(prefix_sum.back() + arr.at(i));
-            if (prefix_sum.back() % 2 != 0)
-            {
-                ++dp.at(0).first;
-            }
-            else
-            {
-                ++dp.at(0).second;
-            }
         }
-        for (int i = 1; i < dp.size(); ++i)
+        for (int i = dp.size() - 2; i >= 0; --i)
         {
-            dp.at(i) = prefix_sum.at(i) % 2 != 0 ? pair<int, int>{dp.at(i - 1).first - 1, dp.at(i - 1).second} : pair<int, int>{dp.at(i - 1).first, dp.at(i - 1).second - 1};
+            dp.at(i) = prefix_sum.at(i + 1) % 2 != 0 ? pair<int, int>{dp.at(i + 1).first + 1, dp.at(i + 1).second} : pair<int, int>{dp.at(i + 1).first, dp.at(i + 1).second + 1};
         }
         for (int i = 0; i < dp.size(); ++i)
         {
