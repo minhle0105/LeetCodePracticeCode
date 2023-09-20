@@ -4,6 +4,7 @@
 using namespace std;
 
 class Solution {
+    // basically idea is to find the longest subarray whose sum equals total_sum - x -> answer = nums.size() - subarray.size()
 public:
     int minOperations(vector<int>& nums, int x) {
         vector<int> prefix_sum;
