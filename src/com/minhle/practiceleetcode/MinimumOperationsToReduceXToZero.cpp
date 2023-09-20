@@ -1,5 +1,5 @@
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -14,7 +14,7 @@ public:
         }
         int sum = prefix_sum.back() - x;
         int res = -1;
-        map<int, int> map_pos;
+        unordered_map<int, int> map_pos;
         for (int i = 0; i < prefix_sum.size(); ++i)
         {
             if (map_pos.find(prefix_sum.at(i)) == map_pos.end())
