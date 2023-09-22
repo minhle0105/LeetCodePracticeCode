@@ -21,8 +21,8 @@ public:
                 current /= nums.at(second);
                 ++second;
             }
-            res += (first - second + 1);
             ++first;
+            res += (first - second);
         }
         return res;
     }
