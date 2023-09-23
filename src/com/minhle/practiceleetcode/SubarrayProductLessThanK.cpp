@@ -22,7 +22,7 @@ public:
                 ++second;
             }
             ++first;
-            res += (first - second );
+            res += (first - second);
         }
         return res;
     }
