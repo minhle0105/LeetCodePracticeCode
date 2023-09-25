@@ -5,6 +5,9 @@ using namespace std;
 class Solution {
 public:
     int maxTurbulenceSize(vector<int>& arr) {
+        // because I'm planning on initalizing window size at 1, which means second = 0 and first = 1
+        // so if arr.size() == 1 the window is never initialized (out of bound)
+        // --> this is an edge case to be handled separately.
         if (arr.size() == 1)
         {
             return 1;
