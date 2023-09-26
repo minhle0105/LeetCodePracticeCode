@@ -32,37 +32,20 @@ public:
             }
             else
             {
-                if (c > stack_.top() && current_chars.find(c) == current_chars.end())
+                if (current_chars.find(c) == current_chars.end())
                 {
+                    while (!stack_.empty() && c < stack_.top())
+                    {
+                        char top_stack = stack_.top();
+                        if (!binary_search(c_pos[top_stack], i))
+                        {
+                            break;
+                        }
+                        stack_.pop();
+                        current_chars.erase(top_stack);
+                    }
                     stack_.push(c);
                     current_chars.insert(c);
-                }
-                else
-                {
-                    if (current_chars.find(c) == current_chars.end())
-                    {
-                        while (!stack_.empty() && c < stack_.top())
-                        {
-                            char top_stack = stack_.top();
-                            bool later = false;
-                            for (int ind : c_pos[top_stack])
-                            {
-                                if (ind > i)
-                                {
-                                    later = true;
-                                    break;
-                                }
-                            }
-                            if (!later)
-                            {
-                                break;
-                            }
-                            stack_.pop();
-                            current_chars.erase(current_chars.find(top_stack));
-                        }
-                        stack_.push(c);
-                        current_chars.insert(c);
-                    }
                 }
             }
         }
@@ -74,5 +57,21 @@ public:
         }
         reverse(res.begin(), res.end());
         return res;
+    }
+private:
+    bool binary_search(const vector<int> &indexes, int index)
+    {
+        int left = 0;
+        int right = indexes.size() - 1;
+        while (left < right)
+        {
+            int mid = (left + right) / 2;
+            if (indexes.at(mid) > index)
+            {
+                return true;
+            }
+            left = mid + 1;
+        }
+        return indexes.at(right) > index;
     }
 };
