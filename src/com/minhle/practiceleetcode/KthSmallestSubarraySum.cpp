@@ -5,15 +5,13 @@ using namespace std;
 class Solution {
 public:
     int kthSmallestSubarraySum(vector<int>& nums, int k) {
-        int min_num = 1;
-        int total_sum = 0;
+        int left = 1;
+        int right = 0;
         for (int num : nums)
         {
-            min_num = min(min_num, num);
-            total_sum += num;
+            left = min(left, num);
+            right += num;
         }
-        int left = min_num;
-        int right = total_sum;
         while (left < right - 1)
         {
             int mid = (left + right) / 2;
