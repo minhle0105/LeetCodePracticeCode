@@ -1,4 +1,5 @@
 #include <limits>
+#include <cmath>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ public:
         {
             return true;
         }
-        for (int i = 0; i <= c / 2; ++i)
+        for (int i = 0; i <= sqrt(c); ++i)
         {
             if (i != 0 && i > c / i)
             {
