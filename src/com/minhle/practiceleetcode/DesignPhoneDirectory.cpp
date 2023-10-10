@@ -1,4 +1,4 @@
-#include <set>
+#include <unordered_set>
 
 using namespace std;
 
@@ -39,6 +39,6 @@ public:
         }
     }
 private:
-    set<int> occupied;
-    set<int> unoccupied;
+    unordered_set<int> occupied;
+    unordered_set<int> unoccupied;
 };
