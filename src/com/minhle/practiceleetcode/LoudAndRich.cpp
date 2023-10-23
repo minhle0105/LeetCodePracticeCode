@@ -1,63 +1,53 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
-#include <utility>
-#include <queue>
 
 using namespace std;
 
 class Solution {
 public:
     vector<int> loudAndRich(vector<vector<int>>& richer, vector<int>& quiet) {
-        unordered_map<int, vector<int>> graph;
         int n = quiet.size();
-        for (int i = 0; i < n; ++i)
-        {
-            graph[i] = vector<int>{};
-        }
+        unordered_map<int, vector<int>> graph;
+        vector<int> res(n, -1);
+
         for (const auto &rich : richer)
         {
             graph[rich.back()].push_back(rich.front());
         }
-        vector<int> res;
+        unordered_set<int> visited;
         for (int i = 0; i < n; ++i)
         {
-            if (graph[i].empty())
-            {
-                res.push_back(i);
-                continue;
-            }
-            res.push_back(bfs(graph, quiet, i));
+            dfs(graph, quiet, res, visited, i);
         }
+
         return res;
     }
-    
-    int bfs(unordered_map<int, vector<int>> &graph, vector<int> &quiet, int source)
-    {
-        pair<int, int> res = {source, quiet.at(source)};
-        queue<int> q;
-        unordered_set<int> visited;
-        q.push(source);
-        visited.insert(source);
-        
-        while (!q.empty())
+
+    int dfs(unordered_map<int, vector<int>> &graph, const vector<int>& quiet, vector<int>& res, unordered_set<int> &visited, int source) {
+        if (res[source] != -1)
         {
-            int curr = q.front();
-            q.pop();
-            for (int richer : graph[curr])
+            return res[source];
+        }
+        if (res[source] == -1)
+        {
+            res[source] = source;
+        }
+        visited.insert(source);
+        int loudest = source;
+        for (int richer : graph[source])
+        {
+            if (visited.find(richer) == visited.end())
             {
-                if (visited.find(richer) == visited.end())
+                int candidate = dfs(graph, quiet, res, visited, richer);
+                if (quiet[candidate] < quiet[loudest])
                 {
-                    visited.insert(richer);
-                    q.push(richer);
-                    if (quiet.at(richer) < res.second)
-                    {
-                        res.second = quiet.at(richer);
-                        res.first = richer;
-                    }
+                    loudest = candidate;
+                    res[source] = candidate;
                 }
             }
         }
-        return res.first;
+        visited.erase(source);
+        return res[source];
     }
 };
