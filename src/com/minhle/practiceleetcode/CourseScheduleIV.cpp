@@ -13,31 +13,40 @@ public:
             graph[r.front()].push_back(r.back());
         }
         vector<bool> res;
+        vector<vector<bool>> isReachable(numCourses, vector<bool>(numCourses, false));
+        for (int i = 0; i < numCourses; ++i)
+        {
+            bfs(graph, i, isReachable);
+        }
         for (const auto &query : queries)
         {
-            unordered_set<int> visited;
-            res.push_back(dfs(graph, visited, query.front(), query.back()));
-        } 
+            int source = query.front();
+            int dest = query.back();
+            res.push_back(isReachable.at(source).at(dest));
+        }
         return res;
     }
 
-    bool dfs(unordered_map<int, vector<int>> &graph, unordered_set<int> &visited, int source, int dst)
+    void bfs(unordered_map<int, vector<int>> &graph, int source, vector<vector<bool>> &isReachable)
     {
-        if (source == dst)
-        {
-            return true;
-        }
+        queue<int> q;
+        unordered_set<int> visited;
+        q.push(source);
         visited.insert(source);
-        for (int course : graph[source])
+
+        while (!q.empty())
         {
-            if (visited.find(course) == visited.end())
+            int curr = q.front();
+            q.pop();
+            for (int course : graph[curr])
             {
-                if (dfs(graph, visited, course, dst))
+                if (visited.find(course) == visited.end())
                 {
-                    return true;
+                    isReachable.at(source).at(course) = true;
+                    visited.insert(course);
+                    q.push(course);
                 }
             }
         }
-        return false;
     }
 };
