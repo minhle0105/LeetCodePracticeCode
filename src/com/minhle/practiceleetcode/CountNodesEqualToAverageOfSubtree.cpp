@@ -1,4 +1,5 @@
 #include <utility>
+#include <unordered_map>
 
 using namespace std;
 
@@ -16,12 +17,17 @@ class Solution {
 public:
     int averageOfSubtree(TreeNode* root) {
         res = 0;
+        subtree_info_cache.clear();
+
+        get_sum_n_nodes(root);
         dfs(root);
+
         return res;
     }
 
 private:
     int res;
+    unordered_map<TreeNode*, pair<int, int>> subtree_info_cache;
 
     void dfs(TreeNode *root)
     {
@@ -29,7 +35,7 @@ private:
         {
             return;
         }
-        auto sum_n_nodes = get_sum_n_nodes(root);
+        auto sum_n_nodes = subtree_info_cache[root];
         int avg = sum_n_nodes.first / sum_n_nodes.second;
         if (avg == root->val)
         {
@@ -48,6 +54,7 @@ private:
         pair<int, int> here = {root->val, 1};
         pair<int, int> left = get_sum_n_nodes(root->left);
         pair<int, int> right = get_sum_n_nodes(root->right);
-        return {here.first + left.first + right.first, here.second + left.second + right.second};
+        subtree_info_cache[root] = {here.first + left.first + right.first, here.second + left.second + right.second};
+        return subtree_info_cache[root];
     }
 };
