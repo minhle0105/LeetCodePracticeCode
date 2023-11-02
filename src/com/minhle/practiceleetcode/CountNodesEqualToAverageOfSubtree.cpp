@@ -47,6 +47,10 @@ private:
 
     pair<int, int> get_sum_n_nodes(TreeNode* root)
     {
+        if (subtree_info_cache.find(root) != subtree_info_cache.end())
+        {
+            return subtree_info_cache[root];
+        }
         if (root == nullptr)
         {
             return {0, 0};
