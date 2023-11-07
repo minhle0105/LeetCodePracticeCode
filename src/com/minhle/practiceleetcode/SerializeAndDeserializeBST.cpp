@@ -54,8 +54,6 @@ public:
         ++next;
         root->right = build_tree(values, value + 1, high);
         return root;
-
-
     }
 
     vector<int> split(const string &data)
