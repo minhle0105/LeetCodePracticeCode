@@ -3,26 +3,27 @@
 class StockSpanner {
 public:
     StockSpanner() {
-
+        current_index = 0;
     }
 
     int next(int price) {
-        int next_last_ind = prices.size();
-        prices.push_back(price);
-        while (!mono_dec_st.empty() && prices.back() >= mono_dec_st.top().second)
+        while (!mono_dec_st.empty() && price >= mono_dec_st.top().second)
         {
             mono_dec_st.pop();
         }
         if (mono_dec_st.empty())
         {
-            mono_dec_st.push({next_last_ind, price});
-            return next_last_ind + 1;
+            mono_dec_st.push({current_index, price});
+            ++current_index;
+            return current_index;
         }
         int leftmost_ind = mono_dec_st.top().first;
-        mono_dec_st.push({next_last_ind, price});
-        return next_last_ind - leftmost_ind;
+        mono_dec_st.push({current_index, price});
+        int res = current_index - leftmost_ind;
+        ++current_index;
+        return res;
     }
 private:
-    vector<int> prices;
     stack<pair<int, int>> mono_dec_st;
+    int current_index;
 };
