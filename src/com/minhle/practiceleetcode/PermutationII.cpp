@@ -1,12 +1,11 @@
-#include <vector>
-#include <unordered_map>
-#include <set>
+#include "AllNecessaryHeaders.h"
 
-using namespace std;
-
-class Permutation
-{
+class Solution {
 public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        return generate_all_permutations(nums);
+    }
+private:
     template<typename T>
     vector<vector<T>> generate_all_permutations(const vector<T> &inputs)
     {
@@ -25,7 +24,7 @@ public:
         }
         return all_perms;
     }
-private:
+
     template<typename T>
     void backtracking(vector<T> &current_perm, const vector<T> &inputs,
                       set<vector<T>> &all_perms, unordered_map<T, int> &counter)
