@@ -1,5 +1,6 @@
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 
 using namespace std;
 
@@ -14,19 +15,24 @@ public:
         {
             ++counter[input];
         }
-        vector<vector<T>> all_perms;
+        set<vector<T>> all_perms_with_no_duplicate;
         vector<T> current_perm;
-        backtracking(current_perm, inputs, all_perms, counter);
+        backtracking(current_perm, inputs, all_perms_with_no_duplicate, counter);
+        vector<vector<T>> all_perms;
+        for (const auto &perm : all_perms_with_no_duplicate)
+        {
+            all_perms.push_back(perm);
+        }
         return all_perms;
     }
 
     template<typename T>
     void backtracking(vector<T> &current_perm, const vector<T> &inputs,
-                      vector<vector<T>> &all_perms, unordered_map<T, int> &counter)
+                      set<vector<T>> &all_perms, unordered_map<T, int> &counter)
     {
         if (current_perm.size() == inputs.size())
         {
-            all_perms.push_back(current_perm);
+            all_perms.insert(current_perm);
             return;
         }
 
