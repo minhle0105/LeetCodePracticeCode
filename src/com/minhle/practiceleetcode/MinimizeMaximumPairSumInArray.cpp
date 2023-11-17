@@ -1,4 +1,4 @@
-#include "AllNecessaryHeaders.h" 
+#include "AllNecessaryHeaders.h"
 
 class Solution {
 public:
