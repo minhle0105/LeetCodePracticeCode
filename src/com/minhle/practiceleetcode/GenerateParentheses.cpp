@@ -5,34 +5,46 @@ public:
     vector<string> generateParenthesis(int n) {
         string curr;
         vector<string> res;
-        backtrack(n, n, curr, res);
+        backtrack(n * 2, curr, res);
         return res;
     }
 
-    void backtrack(int nOpen, int nClose, string &curr, vector<string> &res)
+    void backtrack(int n, string &curr, vector<string> &res)
     {
-        if (nClose == 0)
+        if (curr.size() == n)
         {
-            res.push_back(curr);
+            if (check_valid_parentheses(curr))
+            {
+                res.push_back(curr);
+            }
             return;
         }
-        if (nOpen > 0)
-        {
-            curr += "(";
-            --nOpen;
-            backtrack(nOpen, nClose, curr, res);
-            ++nOpen;
-            curr.pop_back();
-        }
+        curr += "(";
+        backtrack(n, curr, res);
+        curr.pop_back();
+        curr += ")";
+        backtrack(n, curr, res);
+        curr.pop_back();
+    }
 
-        // neu da hop le roi thi ko them duoc )
-        if (nClose > nOpen)
+    bool check_valid_parentheses(string &parentheses)
+    {
+        int nOpen = 0;
+        for (char c : parentheses)
         {
-            curr += ")";
-            --nClose;
-            backtrack(nOpen, nClose, curr, res);
-            ++nClose;
-            curr.pop_back();
+            if (c == '(')
+            {
+                ++nOpen;
+            }
+            else
+            {
+                if (nOpen == 0)
+                {
+                    return false;
+                }
+                --nOpen;
+            }
         }
+        return nOpen == 0;
     }
 };
