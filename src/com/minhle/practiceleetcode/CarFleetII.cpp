@@ -36,6 +36,7 @@ public:
             {
                 res[i] = collision_time(cars[i], collision_position(cars[i], st.top()));
             }
+            // consider current_car = A, two next car to the right is B, C
             while (st.size() >= 2)
             {
                 auto closer_car = st.top();
@@ -46,10 +47,13 @@ public:
                 double collision_position_between_current_car_and_further_car = collision_position(cars[i], further_car);
                 if (collision_position_between_closer_and_further_cars < collision_position_between_current_car_and_further_car)
                 {
+                    // this case is when B and C collides first and then forms a fleet BC with speed of C, because C has
+                    // lower speed than B.
                     st.push(further_car);
                 }
                 else
                 {
+                    // this casae is when A and B collides before B and C collides
                     st.push(further_car);
                     st.push(closer_car);
                     res[i] = collision_time(cars[i], collision_position(cars[i], closer_car));
