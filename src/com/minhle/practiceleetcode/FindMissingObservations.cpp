@@ -20,11 +20,12 @@ public:
             --current_value;
             current_sum = current_value * n;
         }
-        vector<int> res(n, current_value);
         if (current_value == 0)
         {
             return vector<int>{};
         }
+
+        vector<int> res(n, current_value);
         if (current_sum == sum)
         {
             return res;
