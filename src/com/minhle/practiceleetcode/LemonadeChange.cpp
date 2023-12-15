@@ -1,6 +1,7 @@
 #include "AllNecessaryHeaders.h"
 
-class Solution {
+class Solution
+{
 public:
     bool lemonadeChange(vector<int>& bills) {
         vector<int> billCounts(3, 0);
@@ -39,4 +40,4 @@ public:
         }
         return true;
     }
-;
+};
