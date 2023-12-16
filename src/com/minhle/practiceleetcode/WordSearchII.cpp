@@ -78,15 +78,6 @@ private:
     void backtracking(const vector<vector<char>> &board, unordered_set<string> &words_found,
                       string &current_word, Node* curr, vector<vector<bool>> &visited, int i, int j)
     {
-        if (i == board.size())
-        {
-            return;
-        }
-        if (j == board[0].size())
-        {
-            backtracking(board, words_found, current_word, curr, visited, i + 1, 0);
-            return;
-        }
         if (curr->isEndOfWord)
         {
             words_found.insert(current_word);
