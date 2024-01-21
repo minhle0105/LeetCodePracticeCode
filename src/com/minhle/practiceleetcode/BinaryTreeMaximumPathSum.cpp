@@ -26,10 +26,11 @@ public:
         auto path_left = traverse(root->left);
         auto path_right = traverse(root->right);
 
-        auto first = max(root->val, root->val + max(path_left.first, path_right.first));
+        auto first = max(root->val, root->val + max(path_left.first, path_right.first)); // either root only, or left/right only
+
         auto second = max(path_left.second, path_right.second); // ko di qua root
         second = max(second, root->val + path_left.first + path_right.first); // di qua root, qua trai, qua phai
-        second = max(second, first); // either left + root or right + root
+        second = max(second, first); // either (left + root) or (right + root)
 
         return {first, second};
     }
