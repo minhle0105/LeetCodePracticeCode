@@ -9,7 +9,7 @@ public:
             flip(row);
         }
         return image;
-    }
+    }vi
     void reverse_row(vector<int> &row)
     {
         for (int i = 0; i < row.size() / 2; ++i)
