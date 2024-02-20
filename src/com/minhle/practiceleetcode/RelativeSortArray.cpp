@@ -4,6 +4,7 @@ class Solution {
 public:
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
         vector<int> res;
+        res.reserve(arr1.size());
         map<int, int> counter;
         for (int num : arr1)
         {
