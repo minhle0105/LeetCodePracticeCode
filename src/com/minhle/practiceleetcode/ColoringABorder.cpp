@@ -1,7 +1,6 @@
 #include "AllNecessaryHeaders.h"
 
-class Solution
-{
+class Solution {
 public:
     vector<vector<int>> colorBorder(vector<vector<int>>& grid, int row, int col, int color) {
         const vector<int> dR = {0,1,0,-1};
@@ -11,9 +10,10 @@ public:
 
         queue<pair<int, int>> q;
         vector<vector<bool>> visited(m, vector<bool>(n, false));
-        set<pair<int, int>> cells;
+        vector<pair<int, int>> cells;
         q.push({row, col});
         visited[row][col] = true;
+
         int min_row = INT_MAX;
         int min_col = INT_MAX;
 
@@ -23,7 +23,7 @@ public:
         while (!q.empty())
         {
             auto cell = q.front();
-            cells.insert(cell);
+            cells.push_back(cell);
             q.pop();
             auto r = cell.first;
             auto c = cell.second;
@@ -51,24 +51,27 @@ public:
 
         for (const auto &cell : cells)
         {
-            bool on_the_boundary = cell.first == min_row || cell.first == max_row ||
-                                   cell.second == min_col || cell.second == max_col;
-
+            int r = cell.first;
+            int c = cell.second;
+            bool on_the_boundary = r == min_row || r == max_row ||
+                                   c == min_col || c == max_col;
+            if (on_the_boundary)
+            {
+                grid[r][c] = color;
+                continue;
+            }
             bool adjacent_to_one_external_cell = false;
             for (int i = 0; i < 4; ++i)
             {
-                int next_r = cell.first + dR[i];
-                int next_c = cell.second + dC[i];
+                int next_r = r + dR[i];
+                int next_c = c + dC[i];
                 bool in_bound = next_r >= 0 && next_c >= 0 && next_r < m && next_c < n;
-                if (in_bound && cells.find({next_r, next_c}) == cells.end())
+                if (in_bound && !visited[next_r][next_c])
                 {
                     adjacent_to_one_external_cell = true;
+                    grid[r][c] = color;
                     break;
                 }
-            }
-            if (on_the_boundary || adjacent_to_one_external_cell)
-            {
-                grid[cell.first][cell.second] = color;
             }
         }
         return grid;
