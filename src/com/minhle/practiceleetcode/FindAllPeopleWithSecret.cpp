@@ -1,3 +1,5 @@
+#include "AllNecessaryHeaders.h"
+
 class Solution {
 public:
     vector<int> findAllPeople(int n, vector<vector<int>>& meetings, int firstPerson) {
@@ -14,21 +16,20 @@ public:
         }
         for (const auto &meeting : meetings_by_time)
         {
-            auto all_people_at_this_time = meeting.second;
             unordered_map<int, vector<int>> graph;
-            vector<int> people_who_already_knew;
+            unordered_set<int> people_who_already_knew;
 
-            for (const auto &name : all_people_at_this_time)
+            for (const auto &name : meeting.second)
             {
                 graph[name.first].push_back(name.second);
                 graph[name.second].push_back(name.first);
                 if (people.find(name.first) != people.end())
                 {
-                    people_who_already_knew.push_back(name.first);
+                    people_who_already_knew.insert(name.first);
                 }
                 if (people.find(name.second) != people.end())
                 {
-                    people_who_already_knew.push_back(name.second);
+                    people_who_already_knew.insert(name.second);
                 }
             }
 
@@ -63,4 +64,3 @@ public:
         }
     }
 };
-
