@@ -11,7 +11,7 @@ public:
             ++counter2[num];
         }
     }
-    
+
     void add(int index, int val) {
         int current_num = nums2[index];
         --counter2[current_num];
@@ -23,7 +23,7 @@ public:
         nums2[index] = current_num;
         ++counter2[current_num];
     }
-    
+
     int count(int tot) {
         int res = 0;
         for (const auto &pair : counter1)
@@ -41,11 +41,3 @@ private:
     unordered_map<int, int> counter1;
     unordered_map<int, int> counter2;
 };
-
-
-
-
-
-
-
- */
