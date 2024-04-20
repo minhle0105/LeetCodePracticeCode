@@ -17,30 +17,27 @@ public:
                 {
                     continue;
                 }
-                vector<pair<int, int>> cells;
-                dfs(land, i, j, cells);
-                sort(cells.begin(), cells.end());
-                auto top_left = cells.front();
-                auto bottom_right = cells.back();
-
-                res.push_back({top_left.first, top_left.second, bottom_right.first, bottom_right.second});
-                cells.clear();
+                int max_r = i;
+                int max_c = j;
+                dfs(land, i, j, max_r, max_c);
+                res.push_back({i, j, max_r, max_c});
             }
         }
         return res;
     }
 
-    void dfs(vector<vector<int>> &land, int r, int c, vector<pair<int, int>> &cells)
+    void dfs(vector<vector<int>> &land, int r, int c, int &max_r, int &max_c)
     {
         if (r < 0 || c < 0 || r >= m || c >= n || land[r][c] == 0)
         {
             return;
         }
         land[r][c] = 0;
-        cells.push_back({r, c});
+        max_r = max(max_r, r);
+        max_c = max(max_c, c);
         for (int i = 0; i < 4; ++i)
         {
-            dfs(land, r + dR[i], c + dC[i], cells);
+            dfs(land, r + dR[i], c + dC[i], max_r, max_c);
         }
     }
 };
