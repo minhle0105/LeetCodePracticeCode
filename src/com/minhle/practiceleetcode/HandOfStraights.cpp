@@ -1,30 +1,34 @@
 class Solution {
 public:
     bool isNStraightHand(vector<int>& hand, int groupSize) {
-        sort(hand.begin(), hand.end());
-        unordered_set<int> seen;
-        int i = 0;
-        while (i < hand.size())
+        map<int, int> counter;
+        for (int h : hand)
         {
-            vector<int> group = {hand[i]};
-            seen.insert(i);
-            int j = i + 1;
-            while (j < hand.size() && group.size() < groupSize)
+            ++counter[h];
+        }
+        while (!counter.empty())
+        {
+            int next = counter.begin()->first;
+            --counter[next];
+            if (counter[next] == 0)
             {
-                if (seen.find(j) == seen.end() && hand[j] == group.back() + 1)
+                counter.erase(next);
+            }
+            vector<int> group = {next};
+
+            while (group.size() < groupSize)
+            {
+                int target = group.back() + 1;
+                if (counter.find(target) == counter.end())
                 {
-                    group.push_back(hand[j]);
-                    seen.insert(j);
+                    return false;
                 }
-                ++j;
-            }
-            if (group.size() != groupSize)
-            {
-                return false;
-            }
-            while (i < hand.size() && seen.find(i) != seen.end())
-            {
-                ++i;
+                group.push_back(target);
+                --counter[target];
+                if (counter[target] == 0)
+                {
+                    counter.erase(target);
+                }
             }
         }
         return true;
